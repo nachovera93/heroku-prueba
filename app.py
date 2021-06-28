@@ -6,6 +6,10 @@ app = Flask(__name__)
 def index():
      return render_template('index.html')
 
+@app.route('/fase1.html')
+def index():
+     return render_template('fase1.html')
+
 
 
 #if __name__ == '__main__': 
