@@ -8,6 +8,6 @@ def index():
 
 @app.route('/fase1.html')
 def fase1():
-    int fase
-    fase=1
+    fase = 1
+    
     return render_template('fase1.html',fase=fase)
