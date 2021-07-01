@@ -305,6 +305,7 @@ def CorrienteRms(listCurrent):
 
     irms=np.sqrt(MeanSquares)
     print(f'Corriente RMS : {irms}')
+    return irms
 
 
 
@@ -854,8 +855,12 @@ def CurrentFFT(list_fftVoltages, samplings, i):
 
 
 
-a = datetime.datetime.now() 
-energyFase1 = 0.0
+a = datetime.datetime.now()
+b = datetime.datetime.now() 
+c = datetime.datetime.now()  
+energyCGEFase1 = 0.0
+energyPanelesFase1 = 0.0
+energyCargaFase1 = 0.0
 #def Potencias(vrms, irms, phi, i):
     # i = str i
  #   global a
@@ -876,23 +881,47 @@ energyFase1 = 0.0
         #print(f'Reactiva fase 1: {round(Reactiva)}')
         #return Aparente,Activa,Reactiva,energyfase1
 
-def Potencias2():
-    # i = str i
+def Potencias(i,irms,vrms):
+    i = str i
     global a
-    global energyFase1
-    global Aparente2
-    global Activa2
-    global Reactiva2
-    Aparente2 = vrms*irms
-    Activa2 = np.abs(vrms*irms*FP1)
-    #print(f'phasen en potencias2: {phasen}')
-    Reactiva2 = vrms*irms*np.sin(phasevoltaje-phasecorriente)
-    b = datetime.datetime.now()
-    delta=(((b - a).microseconds)/1000+((b - a).seconds)*1000)/10000000000
-    #print(f'ms: {delta}')
-    energyFase1 += Activa2*delta*2.8
-    #print(f'energy: {round(energyFase1,3)}')
-    a = datetime.datetime.now()
+    global b
+    global c
+    global energyCGEFase1
+    global energyPanelesFase1
+    global energyCargaFase1
+    global AparenteCGEFase1
+    global ActivaCGEFase1
+    global ReactivaCGEFase1
+    global AparentePanelesFase1
+    global ActivaPanelesFase1
+    global ReactivaPanelesFase1
+    global AparenteCargaFase1
+    global ActivaCargaFase1
+    global ReactivaCargaFase1
+    if(i==1):
+          AparenteCGEFase1 = vrms*irms
+          ActivaCGEFase1= np.abs(vrms*irms*cosphi)
+          ReactivaCGEFase1 = vrms*irms*np.sin(phasevoltaje-phasecorriente)
+          a2 = datetime.datetime.now()
+          delta=(((a2 - a).microseconds)/1000+((a2 - a).seconds)*1000)/10000000000
+          energyCGEFase1 += ActivaCGEFase1*delta*2.8
+          a = datetime.datetime.now()
+    if(i==2):
+          AparentePanelesFase1 = vrms*irms
+          ActivaPanelesFase1= np.abs(vrms*irms*cosphi)
+          ReactivaPanalesFase1 = vrms*irms*np.sin(phasevoltaje-phasecorriente)
+          b2 = datetime.datetime.now()
+          delta=(((b2 - b).microseconds)/1000+((b2 - b).seconds)*1000)/10000000000
+          energyPanelesFase1 += AActivaPanelesFase1*delta*2.8
+          b = datetime.datetime.now()
+    if(i==3):
+          AparenteCargaFase1 = vrms*irms
+          ActivaCargaFase1= np.abs(vrms*irms*cosphi)
+          ReactivaCargaFase1 = vrms*irms*np.sin(phasevoltaje-phasecorriente)
+          c2 = datetime.datetime.now()
+          delta=(((c2 - c).microseconds)/1000+((c2 - c).seconds)*1000)/10000000000
+          energyCargaFase1 += ActivaCargaFase1*delta*2.8
+          c = datetime.datetime.now()
     
 
 phi1 = 0.0
@@ -992,7 +1021,7 @@ def received():
                             graphFFT(NoVoltageoffset2,samplings)
                             
                             
-                            CorrienteRms(NoCurrentoffset2)
+                            irms1 = CorrienteRms(NoCurrentoffset2)
                             CurrentFFT(NoCurrentoffset2,samplings,1)
                             graphCurrent(NoCurrentoffset2,samplings)
                             graphFFTI(NoCurrentoffset2,samplings)
@@ -1004,7 +1033,7 @@ def received():
                             #listEscalaI=list_FPCurrent*escalaI
                             #samplings = np_array[-1]
                             graphVoltageCurrent(NoVoltageoffset,NoCurrentoffset,samplings)
-                            Potencias2()
+                            Potencias(1,irms1,vrms1)
                             print(f'samplings 2: {samplings}')
                             #FP(list_FPVoltage, list_FPCurrent, i=1)
                        if (np_array[0] == 22):
@@ -1070,7 +1099,7 @@ def received():
                             graphFFT(NoVoltageoffset2,samplings)
                             
                             
-                            CorrienteRms(NoCurrentoffset2)
+                            irms2 = CorrienteRms(NoCurrentoffset2)
                             CurrentFFT(NoCurrentoffset2,samplings,1)
                             graphCurrent(NoCurrentoffset2,samplings)
                             graphFFTI(NoCurrentoffset2,samplings)
@@ -1082,7 +1111,7 @@ def received():
                             #listEscalaI=list_FPCurrent*escalaI
                             #samplings = np_array[-1]
                             graphVoltageCurrent(NoVoltageoffset,NoCurrentoffset,samplings)
-                            Potencias2()
+                            Potencias(2,irms2,vrms2)
                             print(f'samplings 2: {samplings}')
                             #FP(list_FPVoltage, list_FPCurrent, i=1)
                     if (np_array[0] == 33):
@@ -1148,7 +1177,7 @@ def received():
                             graphFFT(NoVoltageoffset2,samplings)
                             
                             
-                            CorrienteRms(NoCurrentoffset2)
+                            irms3 = CorrienteRms(NoCurrentoffset2)
                             CurrentFFT(NoCurrentoffset2,samplings,1)
                             graphCurrent(NoCurrentoffset2,samplings)
                             graphFFTI(NoCurrentoffset2,samplings)
@@ -1160,7 +1189,7 @@ def received():
                             #listEscalaI=list_FPCurrent*escalaI
                             #samplings = np_array[-1]
                             graphVoltageCurrent(NoVoltageoffset,NoCurrentoffset,samplings)
-                            Potencias2()
+                            Potencias(3,irms3,vrms3)
                             print(f'samplings 2: {samplings}')
                             #FP(list_FPVoltage, list_FPCurrent, i=1)
                     
@@ -1285,6 +1314,41 @@ def fase1():
      # puerta=puerta,
      vrms1=round(vrms1,2),
      irms1=round(irms1,2),
+     fp1=round(FP1,2),
+     cosphi=round(cosphi,2),
+     AparenteCGEFase1=AparenteCGEFase1
+     ActivaCGEFase1=ActivaCGEFase1
+     ReactivaCGEFase1=ReactivaCGEFase1
+
+     vrms2=round(vrms2,2),
+     irms2=round(irms2,2),
+     AparentePanelesFase1=AparentePanelesFase1
+     ActivaPanelesFase1=ActivaPanelesFase1
+     ReactivaPanelesFase1=ReactivaPanelesFase1
+
+
+
+     vrms3=round(vrms3,2),
+     irms3=round(irms3,2),
+     AparenteCargaFase1=AparenteCargaFase1
+     ActivaCargaFase1=ActivaCargaFase1
+     ReactivaCargaFase1=ReactivaCargaFase1
+
+
+     energyCGEFase1=energyCGEFase1    
+     energyPanelesFase1=energyPanelesFase1
+     energyCargaFase1=energyCargaFase1
+     
+     
+     
+     phasevoltaje1=phasevoltaje1,
+     FDvoltaje1=FDvoltaje1,
+     phasevoltaje2=phasevoltaje2,
+     FDvoltaje2=FDvoltaje2,
+     phasevoltaje3=phasevoltaje3,
+     FDvoltaje3=FDvoltaje3,
+
+
      labelsvoltaje1=labelsvoltaje1,
      labelsvoltaje2=labelsvoltaje2,
      labelsvoltaje3=labelsvoltaje3,
@@ -1309,15 +1373,12 @@ def fase1():
      valuescurrent3=valuescurrent3,
      ejeycurrent31=ejeycurrent31,
      ejeycurrent32=ejeycurrent32,
-     fp1=round(FP1,2),
-     cosphi=round(cosphi,2),
      ApFase1=round(ApFase1,2),
      AcFase1=round(AcFase1,2),
      ReacFase1=round(ReacFase1,2),
      energyfase1=round(energyFase1,3),
      values2=values2,
-     #thdv=round(DATCorriente,2),
-     DATCorriente=round(DATCorriente,2),
+     #thdv=round(DATCorriente,2)
      labelsfftv1=labelsfftv1,
      valuesfftv1=valuesfftv1,
      largoejeyv1=largoejeyv1,
@@ -1338,13 +1399,11 @@ def fase1():
      largoejeyi3=largoejeyi3,
      #tempESP32=tempESP32,
      #CPU_temp=CPU_temp,
-     Aparente2=round(Aparente2,1),
-     Activa2=round(Activa2,1),
-     Reactiva2=round(Reactiva2,1),
-     FDCorriente=round(FDCorriente,2),
      #humedad=humedad,
      #temperatura=temperatura,
      #ip_address=ip_address,
+     
+     FDCorriente=round(FDCorriente,2),
      labelsfp=labelsfp,
      valuesvoltage=valuesvoltage,
      valuescurrent=valuescurrent,
