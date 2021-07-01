@@ -105,9 +105,9 @@
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
-                    <strong>Voltaje</strong>
+                    <strong>Voltaje CGE Fase 1</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{vrms}}V</strong></div>
+                  <div class="text"><strong class="d-block dashtext-3">{{vrms1}}V</strong></div>
                 </div>
               </div>
             </div>
@@ -115,9 +115,9 @@
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
-                    <strong>Corriente</strong>
+                    <strong>Corriente CGE Fase 1</strong>
                   </div>
-                  <div class="d-block dashtext-2">{{irms}} A</div>
+                  <div class="d-block dashtext-2">{{irms1}} A</div>
                 </div>
               </div>
             </div>
@@ -233,14 +233,40 @@
       <section class="no-padding-top no-padding-bottom">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="line-cahrt block">
-                  <canvas id="lineCahrt0"></canvas>
+                  <canvas id="linevoltajecge1"></canvas>
                 </div>
               </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
               <div class="line-cahrt block">
-                <canvas id="lineCahrt1"></canvas>
+                <canvas id="linevoltajepaneles1"></canvas>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="line-cahrt block">
+                <canvas id="linevoltajecarga1"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> 
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+                <div class="line-cahrt block">
+                  <canvas id="linecorrientecge1"></canvas>
+                </div>
+              </div>
+            <div class="col-lg-4">
+              <div class="line-cahrt block">
+                <canvas id="linecorrientepaneles1"></canvas>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="line-cahrt block">
+                <canvas id="linecorrientecarga1"></canvas>
               </div>
             </div>
           </div>
@@ -249,19 +275,47 @@
       <section class="no-padding-top no-padding-bottom">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-6">
-              <div class="line-cahrt block">
-                <canvas id="lineCahrt2"></canvas>
-              </div>
-            </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="line-cahrt block">
-                  <canvas id="lineCahrt3"></canvas>
+                  <canvas id="linefftvoltajecge1"></canvas>
                 </div>
               </div>
+            <div class="col-lg-4">
+              <div class="line-cahrt block">
+                <canvas id="linefftvoltajepaneles1"></canvas>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="line-cahrt block">
+                <canvas id="linefftvoltajecarga1"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </section> 
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+                <div class="line-cahrt block">
+                  <canvas id="linefftcorrientecge1"></canvas>
+                </div>
+              </div>
+            <div class="col-lg-4">
+              <div class="line-cahrt block">
+                <canvas id="linefftcorrientepaneles1"></canvas>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="line-cahrt block">
+                <canvas id="linefftcorrientecarga1"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>  
+      
+      
       
       <section class="margin-bottom-sm">
         <div class="container-fluid">
@@ -477,7 +531,7 @@
       legendState = false;
     }
 
-    var LINECHART = $('#lineCahrt0');
+    var LINECHART = $('#linevoltajecge1');
     var myLineChart = new Chart(LINECHART, {
       type: 'line',
       options: {
@@ -535,6 +589,137 @@
 </script>
       
 
+<!--Grafico Voltaje Paneles-->
+<script>
+
+  var legendState = true;
+  if ($(window).outerWidth() < 576) {
+    legendState = false;
+  }
+
+  var LINECHART = $('#linevoltajepaneles1');
+  var myLineChart = new Chart(LINECHART, {
+    type: 'line',
+    options: {
+    scales: {
+      xAxes: [{
+        display: true,
+        gridLines: {
+          display: false
+        }
+      }],
+        yAxes: [{
+          ticks: {
+            max: {{ejeyV21 | safe}},
+            min: {{ejeyV22 | safe}}
+          },
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }]
+    },
+    legend: {
+      display: legendState
+    }
+  },
+    data: {
+      labels: {{ labelsvoltaje2 | safe }},
+     datasets: [
+      {
+      label: "Voltaje Paneles Fase 1",
+      data: {{ valuesvoltaje2 | safe }},
+      fill: true,
+      lineTension: 5,
+      backgroundColor: "transparent",
+      borderColor: '#864DD9',
+      pointBorderColor: '#864DD9',
+      pointHoverBackgroundColor: '#864DD9',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      borderWidth: 1,
+      pointBackgroundColor: "#fff",
+      pointBorderWidth: 1,
+      pointHoverRadius: 2,
+      pointHoverBorderColor: "#fff",
+      pointHoverBorderWidth: 1,
+      pointRadius: 1,
+      pointHitRadius: 0,
+      spanGaps: false
+      }
+     ]
+    }
+   });
+</script>
+
+<!--Grafico Voltaje Carga-->
+<script>
+
+  var legendState = true;
+  if ($(window).outerWidth() < 576) {
+    legendState = false;
+  }
+
+  var LINECHART = $('#linevoltajecarga1');
+  var myLineChart = new Chart(LINECHART, {
+    type: 'line',
+    options: {
+    scales: {
+      xAxes: [{
+        display: true,
+        gridLines: {
+          display: false
+        }
+      }],
+        yAxes: [{
+          ticks: {
+            max: {{ejeyV31 | safe}},
+            min: {{ejeyV32 | safe}}
+          },
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }]
+    },
+    legend: {
+      display: legendState
+    }
+  },
+    data: {
+      labels: {{ labelsvoltaje3 | safe }},
+     datasets: [
+      {
+      label: "Voltaje Carga Fase 1",
+      data: {{ valuesvoltaje3 | safe }},
+      fill: true,
+      lineTension: 5,
+      backgroundColor: "transparent",
+      borderColor: '#864DD9',
+      pointBorderColor: '#864DD9',
+      pointHoverBackgroundColor: '#864DD9',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      borderWidth: 1,
+      pointBackgroundColor: "#fff",
+      pointBorderWidth: 1,
+      pointHoverRadius: 2,
+      pointHoverBorderColor: "#fff",
+      pointHoverBorderWidth: 1,
+      pointRadius: 1,
+      pointHitRadius: 0,
+      spanGaps: false
+      }
+     ]
+    }
+   });
+</script>
+
+
 <!--Grafico Corriente CGE-->
 <script>
         // ------------------------------------------------------- //
@@ -546,7 +731,7 @@
             legendState = false;
           }
       
-          var LINECHART = $('#lineCahrt1');
+          var LINECHART = $('#linecorrientecge1');
           var myLineChart = new Chart(LINECHART, {
             type: 'line',
             options: {
@@ -614,7 +799,7 @@
       legendState = false;
     }
 
-    var LINECHART = $('#lineCahrt1');
+    var LINECHART = $('#linecorrientepaneles1');
     var myLineChart = new Chart(LINECHART, {
       type: 'line',
       options: {
@@ -671,19 +856,18 @@
   });
 </script> 
 
-
-<!--Grafico FFt Voltaje CGE-->
+<!--Grafico Corriente Carga-->
 <script>
   // ------------------------------------------------------- //
-    // Line Chart
+    // Line Chart corriente 1 CGE
     // ------------------------------------------------------ //
-   //electrohydro.cl
+
     var legendState = true;
     if ($(window).outerWidth() < 576) {
       legendState = false;
     }
 
-    var LINECHART = $('#lineCahrt2');
+    var LINECHART = $('#linecorrientecarga1');
     var myLineChart = new Chart(LINECHART, {
       type: 'line',
       options: {
@@ -696,7 +880,75 @@
         }],
           yAxes: [{
             ticks: {
-              max: {{largoejey | safe}},
+              max: {{ejeycurrent31 | safe}},
+              min: {{ejeycurrent32 | safe}}
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+      }
+    },
+      data: {
+        labels: {{ labelscurrent3 | safe }},
+       datasets: [      
+       {
+       label: "Corriente Carga Fase 1",
+       data: {{ valuescurrent3 | safe }},
+       fill: true,
+       lineTension: 5,
+       backgroundColor: "transparent",
+       borderColor: "#EF8C99",
+       pointBorderColor: '#EF8C99',
+       pointHoverBackgroundColor: "#EF8C99",
+       borderCapStyle: 'butt',
+       borderDash: [],
+       borderDashOffset: 0.0,
+       borderJoinStyle: 'miter',
+       borderWidth: 1,
+       pointBackgroundColor: "#fff",
+       pointBorderWidth: 1,
+       pointHoverRadius: 1,
+       pointHoverBorderColor: "#fff",
+       pointHoverBorderWidth: 2,
+       pointRadius: 1,
+       pointHitRadius: 2,
+       spanGaps: false
+                }
+        ]
+      }
+  });
+</script>
+
+<!--Grafico FFt Voltaje CGE-->
+<script>
+  // ------------------------------------------------------- //
+    // Line Chart
+    // ------------------------------------------------------ //
+   //electrohydro.cl
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#linefftvoltajecge1');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejeyv1 | safe}},
               min: 0
             },
             display: true,
@@ -710,11 +962,11 @@
        }
       },
         data: {
-          labels: {{ labelsfftv | safe }},
+          labels: {{ labelsfftv1 | safe }},
           datasets: [
           {
-          label: "FFT Voltaje Fase 1",
-          data: {{ valuesfftv | safe }},
+          label: "FFT Voltaje CGE Fase 1",
+          data: {{ valuesfftv1 | safe }},
           fill: true,
           lineTension: 0.1,
           backgroundColor: "transparent",
@@ -741,6 +993,143 @@
 </script>
 
 
+<!--Grafico FFt Voltaje paneles-->
+<script>
+  // ------------------------------------------------------- //
+    // Line Chart
+    // ------------------------------------------------------ //
+   //electrohydro.cl
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#linefftvoltajepaneles1');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejeyv2 | safe}},
+              min: 0
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+       }
+      },
+        data: {
+          labels: {{ labelsfftv2 | safe }},
+          datasets: [
+          {
+          label: "FFT Voltaje Paneles Fase 1",
+          data: {{ valuesfftv2 | safe }},
+          fill: true,
+          lineTension: 0.1,
+          backgroundColor: "transparent",
+          borderColor: '#864DD9',
+          pointBorderColor: '#864DD9',
+          pointHoverBackgroundColor: '#864DD9',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 0.5,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 1,
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 1,
+          pointRadius: 1,
+          pointHitRadius: 1,
+          spanGaps: false
+          }
+        ]
+      }
+   });
+</script>
+
+
+<!--Grafico FFt Voltaje carga-->
+<script>
+  // ------------------------------------------------------- //
+    // Line Chart
+    // ------------------------------------------------------ //
+   //electrohydro.cl
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#lineCahrt2');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejeyv3 | safe}},
+              min: 0
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+       }
+      },
+        data: {
+          labels: {{ labelsfftv3 | safe }},
+          datasets: [
+          {
+          label: "FFT Voltaje Carga Fase 1",
+          data: {{ valuesfftv3 | safe }},
+          fill: true,
+          lineTension: 0.1,
+          backgroundColor: "transparent",
+          borderColor: '#864DD9',
+          pointBorderColor: '#864DD9',
+          pointHoverBackgroundColor: '#864DD9',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 0.5,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 1,
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 1,
+          pointRadius: 1,
+          pointHitRadius: 1,
+          spanGaps: false
+          }
+        ]
+      }
+   });
+</script>
+
 <!--Grafico FFt corriente CGE-->
 <script>
   // ------------------------------------------------------- //
@@ -765,7 +1154,7 @@
         }],
           yAxes: [{
             ticks: {
-              max: {{largoejeyi | safe}},
+              max: {{largoejeyi1 | safe}},
               min: 0
             },
             display: true,
@@ -779,11 +1168,147 @@
        }
       },
         data: {
-          labels: {{ labelsffti | safe }},
+          labels: {{ labelsffti1 | safe }},
           datasets: [
           {
-          label: "FFT Corriente Fase 1",
-          data: {{ valuesffti | safe }},
+          label: "FFT Corriente CGE Fase 1",
+          data: {{ valuesffti1 | safe }},
+          fill: true,
+          lineTension: 0.1,
+          backgroundColor: "transparent",
+          borderColor: '#864DD9',
+          pointBorderColor: '#864DD9',
+          pointHoverBackgroundColor: '#864DD9',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 2,
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 1,
+          pointRadius: 1,
+          pointHitRadius: 1,
+          spanGaps: false
+          }
+        ]
+      }
+   });
+</script>
+
+<!--Grafico FFt corriente Paneles-->
+<script>
+  // ------------------------------------------------------- //
+    // Line Chart
+    // ------------------------------------------------------ //
+   //electrohydro.cl
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#lineCahrt3');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejeyi2 | safe}},
+              min: 0
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+       }
+      },
+        data: {
+          labels: {{ labelsffti2 | safe }},
+          datasets: [
+          {
+          label: "FFT Corriente Paneles Fase 1",
+          data: {{ valuesffti2 | safe }},
+          fill: true,
+          lineTension: 0.1,
+          backgroundColor: "transparent",
+          borderColor: '#864DD9',
+          pointBorderColor: '#864DD9',
+          pointHoverBackgroundColor: '#864DD9',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 2,
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 1,
+          pointRadius: 1,
+          pointHitRadius: 1,
+          spanGaps: false
+          }
+        ]
+      }
+   });
+</script>
+
+<!--Grafico FFt corriente Paneles-->
+<script>
+  // ------------------------------------------------------- //
+    // Line Chart
+    // ------------------------------------------------------ //
+   //electrohydro.cl
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#lineCahrt3');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejeyi3 | safe}},
+              min: 0
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+       }
+      },
+        data: {
+          labels: {{ labelsffti3 | safe }},
+          datasets: [
+          {
+          label: "FFT Corriente Carga Fase 1",
+          data: {{ valuesffti3 | safe }},
           fill: true,
           lineTension: 0.1,
           backgroundColor: "transparent",
