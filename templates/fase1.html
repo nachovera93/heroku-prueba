@@ -188,7 +188,7 @@
                   <div class="title">
                     <strong>cos phi</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-2">{{fp2}}</strong></div>
+                  <div class="text"><strong class="d-block dashtext-2">{{cosphi}}</strong></div>
                 </div>
               </div>
             </div>
@@ -198,7 +198,7 @@
                   <div class="title">
                     <strong>DAT</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{thdi}} %</strong></div>
+                  <div class="text"><strong class="d-block dashtext-3">{{DATCorriente}} %</strong></div>
                 </div>
               </div>
             </div>
@@ -374,8 +374,11 @@
   <script src="../static/vendor/jquery-validation/jquery.validate.min.js"></script>
   <script src="../static/js/charts-home.js"></script>
   <script src="../static/js/front.js"></script>
+
   
-  <script>
+
+ <!--Grafico Voltaje y corriente-->
+<script>
       // ------------------------------------------------------- //
       // Line Chart
       // ------------------------------------------------------ //
@@ -463,10 +466,11 @@
        }
     });
 
-  </script>
+</script>
   
- <script>
 
+<!--Grafico Voltaje CGE-->
+<script>
 
     var legendState = true;
     if ($(window).outerWidth() < 576) {
@@ -486,8 +490,8 @@
         }],
           yAxes: [{
             ticks: {
-              max: {{largoejeyV | safe}},
-              min: {{largoejeyV2 | safe}}
+              max: {{ejeyV11 | safe}},
+              min: {{ejeyV12 | safe}}
             },
             display: true,
             gridLines: {
@@ -503,8 +507,8 @@
         labels: {{ labelsvoltaje1 | safe }},
        datasets: [
         {
-        label: "Voltaje Fase 1",
-        data: {{ values | safe }},
+        label: "Voltaje CGE Fase 1",
+        data: {{ valuesvoltaje1 | safe }},
         fill: true,
         lineTension: 5,
         backgroundColor: "transparent",
@@ -528,11 +532,13 @@
        ]
       }
      });
-    </script>
+</script>
       
-      <script>
+
+<!--Grafico Corriente CGE-->
+<script>
         // ------------------------------------------------------- //
-          // Line Chart
+          // Line Chart corriente 1 CGE
           // ------------------------------------------------------ //
       
           var legendState = true;
@@ -553,8 +559,8 @@
               }],
                 yAxes: [{
                   ticks: {
-                    max: {{largoejeyI | safe}},
-                    min: {{largoejeyI2 | safe}}
+                    max: {{ejeycurrent11 | safe}},
+                    min: {{ejeycurrent12 | safe}}
                   },
                   display: true,
                   gridLines: {
@@ -567,11 +573,11 @@
             }
           },
             data: {
-              labels: {{ labelsI | safe }},
+              labels: {{ labelscurrent1 | safe }},
              datasets: [      
              {
-             label: "Corriente Fase 1",
-             data: {{ values2 | safe }},
+             label: "Corriente CGE Fase 1",
+             data: {{ valuescurrent1 | safe }},
              fill: true,
              lineTension: 5,
              backgroundColor: "transparent",
@@ -596,6 +602,77 @@
             }
         });
 </script> 
+
+
+<!--Grafico Corriente Paneles-->
+<script>
+// ------------------------------------------------------- //
+    // Line Chart paneles 1 CGE
+    // ------------------------------------------------------ //
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#lineCahrt1');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{ejeycurrent21 | safe}},
+              min: {{ejeycurrent22 | safe}}
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+      }
+    },
+      data: {
+        labels: {{ labelscurrent2 | safe }},
+       datasets: [      
+       {
+       label: "Corriente Paneles Fase 1",
+       data: {{ valuescurrent2 | safe }},
+       fill: true,
+       lineTension: 5,
+       backgroundColor: "transparent",
+       borderColor: "#EF8C99",
+       pointBorderColor: '#EF8C99',
+       pointHoverBackgroundColor: "#EF8C99",
+       borderCapStyle: 'butt',
+       borderDash: [],
+       borderDashOffset: 0.0,
+       borderJoinStyle: 'miter',
+       borderWidth: 1,
+       pointBackgroundColor: "#fff",
+       pointBorderWidth: 1,
+       pointHoverRadius: 1,
+       pointHoverBorderColor: "#fff",
+       pointHoverBorderWidth: 2,
+       pointRadius: 1,
+       pointHitRadius: 2,
+       spanGaps: false
+                }
+        ]
+      }
+  });
+</script> 
+
+
+<!--Grafico FFt Voltaje CGE-->
 <script>
   // ------------------------------------------------------- //
     // Line Chart
@@ -662,6 +739,9 @@
       }
    });
 </script>
+
+
+<!--Grafico FFt corriente CGE-->
 <script>
   // ------------------------------------------------------- //
     // Line Chart

@@ -338,7 +338,7 @@ def graphVoltageCurrent(listVoltage,listCurrent,samplings): ##Grafica corriente 
         
         
 
-def graphVoltage1(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Grafica corriente y Voltaje
+def graphVoltage1(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Grafica voltaje CGE
         global labelsvoltaje1
         global valuesvoltaje1
         global ejeyV11
@@ -351,8 +351,7 @@ def graphVoltage1(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Graf
         valuesvoltaje1 = [ i for i in valores ]
         labelsvoltaje1 = [ i for i in my_formatted_list ]
         ejeyV11 = maximovoltaje + 100
-        ejeyV12 = minimov
-        oltaje - 100
+        ejeyV12 = minimovoltaje - 100
         #Graficar png
            # plt.figure(figsize=(15, 5))
            #plt.plot(list_fftVoltage)
@@ -365,7 +364,7 @@ def graphVoltage1(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Graf
            # plt.savefig("images/señal/voltage/"+st+"Voltage1.png")
            # plt.close(fig)
 
-def graphVoltage2(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Grafica corriente y Voltaje
+def graphVoltage2(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Grafica voltaje Paneles
         global labelsvoltaje2
         global valuesvoltaje2
         global ejeyV21
@@ -380,7 +379,7 @@ def graphVoltage2(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Graf
         ejeyV21 = maximovoltaje + 100
         ejeyV22 = minimovoltaje - 100
 
-def graphVoltage3(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Grafica corriente y Voltaje
+def graphVoltage3(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Grafica voltaje Carga
         global labelsvoltaje3
         global valuesvoltaje2
         global ejeyV31
@@ -395,7 +394,7 @@ def graphVoltage3(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Graf
         ejeyV31 = maximovoltaje + 100
         ejeyV32 = minimovoltaje - 100
 
-def graphCurrent1(list_fftCurrent,samplings): ##Grafica corriente y Voltaje
+def graphCurrent1(list_fftCurrent,samplings): ##Grafica corriente CGE
         global labelscurrent1
         global valuescurrent1
         global ejeycurrent11
@@ -408,7 +407,6 @@ def graphCurrent1(list_fftCurrent,samplings): ##Grafica corriente y Voltaje
         tiempo = 1/(samplings*(0.001/4200))
         tiempoms = np.arange(0,tiempo,tiempo/4096)
         my_formatted_list = [ '%.2f' % elem for elem in tiempoms ]
-        
         #valores2=round(val,1)
         valuescurrent1 = [ i for i in valores ]
         #labelsI = [ i for i in range(0,len(values2)) ]
@@ -416,7 +414,7 @@ def graphCurrent1(list_fftCurrent,samplings): ##Grafica corriente y Voltaje
         ejeycurrent11 = maximocorriente +1
         ejeycurrent12 = minimocorriente -1
 
-def graphCurrent2(list_fftCurrent,samplings): ##Grafica corriente y Voltaje
+def graphCurrent2(list_fftCurrent,samplings): ##Grafica corriente Paneles
         global labelscurrent2
         global valuescurrent2
         global ejeycurrent21
@@ -437,7 +435,7 @@ def graphCurrent2(list_fftCurrent,samplings): ##Grafica corriente y Voltaje
         ejeycurrent21 = maximocorriente +1
         ejeycurrent22 = minimocorriente -1
 
-def graphCurrent3(list_fftCurrent,samplings): ##Grafica corriente y Voltaje
+def graphCurrent3(list_fftCurrent,samplings): ##Grafica corriente Carga
         global labelscurrent3
         global valuescurrent3
         global ejeycurrent31
@@ -476,17 +474,16 @@ def graphCurrent3(list_fftCurrent,samplings): ##Grafica corriente y Voltaje
         # plt.close(fig)
 
 
-def graphFFT(list_fftVoltages, samplings):
+def graphFFTV1(list_fftVoltages, samplings):
         N = len(list_fftVoltages)
         T = 1 / samplings
         list_fftVoltages -= np.mean(list_fftVoltages)
         datosfft = list_fftVoltages * np.hamming(4096)
         yf = np.fft.rfft(datosfft)
        # yf=fft(list_fftVoltages)
-        global valuesfftv
-        global labelsfftv
-        global largoejey
-        
+        global valuesfftv1
+        global labelsfftv1
+        global largoejeyv1
         # print(f'largo yf : {len(yf)}')
         xf = fftfreq(N, T)[:N//2]  # tiene un largo de 2048
         #print(f'largo xf : {len(xf)}')
@@ -495,24 +492,88 @@ def graphFFT(list_fftVoltages, samplings):
         intervalo = int(np.round(2600/razon,1))
         #ejey = np.abs(20*np.log10(yf[:N]))
         ejey = 2.0/N * np.abs(yf[0:N//2])
-        
-        valuesfftv = [ i for i in ejey]
+        valuesfftv1 = [ i for i in ejey]
         xf1 = np.round(xf,1)
-        labelsfftv = [ i for i in xf1[:intervalo] ]
-        largoejey = max(ejey)
+        labelsfftv1 = [ i for i in xf1[:intervalo] ]
+        largoejey1 = max(ejey)
+
+def graphFFTV2(list_fftVoltages, samplings):
+        N = len(list_fftVoltages)
+        T = 1 / samplings
+        list_fftVoltages -= np.mean(list_fftVoltages)
+        datosfft = list_fftVoltages * np.hamming(4096)
+        yf = np.fft.rfft(datosfft)
+       # yf=fft(list_fftVoltages)
+        global valuesfftv2
+        global labelsfftv2
+        global largoejeyv2
+        xf = fftfreq(N, T)[:N//2]  # tiene un largo de 2048
+        mitad = samplings/2
+        razon = mitad/2048
+        intervalo = int(np.round(2600/razon,1))
+        ejey = 2.0/N * np.abs(yf[0:N//2])
+        valuesfftv2 = [ i for i in ejey]
+        xf1 = np.round(xf,1)
+        labelsfftv2 = [ i for i in xf1[:intervalo] ]
+        largoejeyv2 = max(ejey)
+
+def graphFFTV3(list_fftVoltages, samplings):
+        N = len(list_fftVoltages)
+        T = 1 / samplings
+        list_fftVoltages -= np.mean(list_fftVoltages)
+        datosfft = list_fftVoltages * np.hamming(4096)
+        yf = np.fft.rfft(datosfft)
+       # yf=fft(list_fftVoltages)
+        global valuesfftv3
+        global labelsfftv3
+        global largoejeyv3
+        xf = fftfreq(N, T)[:N//2]  # tiene un largo de 2048
+        mitad = samplings/2
+        razon = mitad/2048
+        intervalo = int(np.round(2600/razon,1))
+        ejey = 2.0/N * np.abs(yf[0:N//2])
+        valuesfftv3 = [ i for i in ejey]
+        xf1 = np.round(xf,1)
+        labelsfftv3 = [ i for i in xf1[:intervalo] ]
+        largoejeyv3 = max(ejey)
         
         
      
-def graphFFTI(list_fftVoltages, samplings):
+def graphFFTI1(list_fftVoltages, samplings):
         N = len(list_fftVoltages)
         T = 1 / samplings
         list_fftVoltages -= np.mean(list_fftVoltages)
         datosfft = list_fftVoltages * np.hamming(4096)#np.kaiser(N,100)
         yf = np.fft.rfft(datosfft)
         #yf=fft(list_fftVoltages)
-        global valuesffti
-        global labelsffti
-        global largoejeyi
+        global valuesffti1
+        global labelsffti1
+        global largoejeyi1
+        mitad = samplings/2
+        razon = mitad/((N/2))
+        intervalo = int(np.round(2600/razon,1))
+        # print(f'largo yf : {len(yf)}')
+        xf = fftfreq(N, T)[:N//2]  # tiene un largo de 4096
+        # print(f'largo xf : {len(xf)}')
+        ejey = 2.0/N * np.abs(yf[0:N//2])
+        #ejey = np.abs(20*np.log10(yf[:N]))
+        #print(f'ejey: {ejey}')    
+        valuesffti1 = [ i for i in ejey]
+        xf1 = np.round(xf,1)
+        labelsffti1 = [ i for i in xf1[:intervalo] ]
+        largoejeyi1 = max(ejey)
+
+
+def graphFFTI2(list_fftVoltages, samplings):
+        N = len(list_fftVoltages)
+        T = 1 / samplings
+        list_fftVoltages -= np.mean(list_fftVoltages)
+        datosfft = list_fftVoltages * np.hamming(4096)#np.kaiser(N,100)
+        yf = np.fft.rfft(datosfft)
+        #yf=fft(list_fftVoltages)
+        global valuesffti2
+        global labelsffti2
+        global largoejeyi2
         mitad = samplings/2
         razon = mitad/((N/2))
         intervalo = int(np.round(2600/razon,1))
@@ -523,10 +584,36 @@ def graphFFTI(list_fftVoltages, samplings):
         #ejey = np.abs(20*np.log10(yf[:N]))
         #print(f'ejey: {ejey}')
         
-        valuesffti = [ i for i in ejey]
+        valuesffti2 = [ i for i in ejey]
         xf1 = np.round(xf,1)
-        labelsffti = [ i for i in xf1[:intervalo] ]
-        largoejeyi = max(ejey)
+        labelsffti2 = [ i for i in xf1[:intervalo] ]
+        largoejeyi2 = max(ejey)
+
+
+def graphFFTI3(list_fftVoltages, samplings):
+        N = len(list_fftVoltages)
+        T = 1 / samplings
+        list_fftVoltages -= np.mean(list_fftVoltages)
+        datosfft = list_fftVoltages * np.hamming(4096)#np.kaiser(N,100)
+        yf = np.fft.rfft(datosfft)
+        #yf=fft(list_fftVoltages)
+        global valuesffti3
+        global labelsffti3
+        global largoejeyi3
+        mitad = samplings/2
+        razon = mitad/((N/2))
+        intervalo = int(np.round(2600/razon,1))
+        # print(f'largo yf : {len(yf)}')
+        xf = fftfreq(N, T)[:N//2]  # tiene un largo de 4096
+        # print(f'largo xf : {len(xf)}')
+        ejey = 2.0/N * np.abs(yf[0:N//2])
+        #ejey = np.abs(20*np.log10(yf[:N]))
+        #print(f'ejey: {ejey}')
+        
+        valuesffti3 = [ i for i in ejey]
+        xf1 = np.round(xf,1)
+        labelsffti3 = [ i for i in xf1[:intervalo] ]
+        largoejeyi3 = max(ejey)
 
 phasevoltaje=0.0
 sincvoltaje=0
@@ -643,7 +730,7 @@ def CurrentFFT(list_fftVoltages, samplings, i):
     global FDCorriente
     global a2
     global FP1
-    global FP2
+    global cosphi
     global phasen
     global phasecorriente
     global FD
@@ -747,10 +834,10 @@ def CurrentFFT(list_fftVoltages, samplings, i):
          if (sincvoltaje == 1):
                  #print(f'sincvoltaje == {sincvoltaje}')
                  FP1=np.cos(phasevoltaje-phasecorriente)*FDCorriente
-                 FP2=np.cos(phasevoltaje-phasecorriente)
+                 cosphi=np.cos(phasevoltaje-phasecorriente)
                  #FP=np.cos(FaseArmonicoFundamentalVoltaje-FaseArmonicoFundamentalCorriente)
                  print(f'FP1 : {FP1}')
-                 print(f'cos(phi) : {FP2}')
+                 print(f'cos(phi) : {cosphi}')
          
          sincvoltaje=0    
          #print(f'sincvoltaje == {sincvoltaje}')    
@@ -821,16 +908,20 @@ energyFase1 = 0.0
 
 global vrms1
 global vrms2
+global vrms3
 global phasevoltaje1
 global FDvoltaje1
 global phasevoltaje2
 global FDvoltaje2
+global phasevoltaje3
+global FDvoltaje3
+
 
 def received():
            while True:
                   global valor
-                  global thdv
-                  global thdi
+                  #global thdv
+                  #global thdi
                   global valor1 
                   esp32_bytes = esp32.readline()
                   decoded_bytes = str(esp32_bytes[0:len(esp32_bytes)-2].decode("utf-8"))#utf-8
@@ -976,6 +1067,84 @@ def received():
                             vrms2=VoltajeRms(NoVoltageoffset2)
                             phasevoltaje2,FDvoltaje2=VoltageFFT(NoVoltageoffset2,samplings)
                             graphVoltage2(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
+                            graphFFT(NoVoltageoffset2,samplings)
+                            
+                            
+                            CorrienteRms(NoCurrentoffset2)
+                            CurrentFFT(NoCurrentoffset2,samplings,1)
+                            graphCurrent(NoCurrentoffset2,samplings)
+                            graphFFTI(NoCurrentoffset2,samplings)
+                            #maximo=max(list_FPCurrent[1000:1700])
+                            #minimo=min(list_FPCurrent[1000:1700])
+                            #diferencia=maximo-minimo
+                            #maximo2=max(list_FPCurrent)
+                            #escalaI = valor1*np.sqrt(2) / maximo2
+                            #listEscalaI=list_FPCurrent*escalaI
+                            #samplings = np_array[-1]
+                            graphVoltageCurrent(NoVoltageoffset,NoCurrentoffset,samplings)
+                            Potencias2()
+                            print(f'samplings 2: {samplings}')
+                            #FP(list_FPVoltage, list_FPCurrent, i=1)
+                    if (np_array[0] == 33):
+                            samplings = np_array[-1]
+                            list_FPVoltage3 = np_array[0:4200]
+                            list_FPCurrent3 = np_array[4201:8400]
+                            
+                            sos = signal.butter(10, 3000, 'low', fs=samplings, output='sos')
+                            list_FPVoltage2 = signal.sosfilt(sos, list_FPVoltage3)
+                            #list_FPVoltage2 = savgol_filter(list_FPVoltage2,len(list_FPVoltage2)-1,))
+                            #sos = signal.butter(4, 50, 'low', fs=samplings, output='sos')
+                            list_FPCurrent2 = signal.sosfilt(sos, list_FPCurrent3)
+                            
+                            list_FPVoltage = list_FPVoltage2[104:4200]
+                            list_FPCurrent = list_FPCurrent2 [103:4200]
+
+                            #Valor dc de Voltaje
+                            valoresmaximovoltajesinmedia=getMaxValues(list_FPVoltage, 20)
+                            valoresminimovoltajesinmedia=getMinValues(list_FPVoltage, 20)
+                            maximovoltaje = np.median(valoresmaximovoltajesinmedia)
+                            minimovoltaje = np.median(valoresminimovoltajesinmedia)
+                            mediadcvoltaje = (maximovoltaje+minimovoltaje)/2
+                            # Valores maximo y minimos de voltaje sin componente continua
+                            NoVoltageoffset=list_FPVoltage-mediadcvoltaje
+                            maximovoltaje2sinmedia=getMaxValues(NoVoltageoffset, 20)
+                            minimovoltaje2sinmedia=getMinValues(NoVoltageoffset, 20)
+                            maximovoltaje2 = np.median(maximovoltaje2sinmedia)
+                            minimovoltaje2 = np.median(minimovoltaje2sinmedia)
+                            #print(f'maximo voltaje{maximovoltaje2}')
+                            #print(f'maximo voltaje{minimovoltaje2}')
+                            NoVoltageoffset2 = EscalaVoltaje(NoVoltageoffset)
+                            #NoVoltageoffset2=NoVoltageoffset/1.90
+
+                            #print(f'len 1: {len(list_FPVoltage)}')
+                                # print(f'maximos{valoresmaximovoltajesinmedia}')
+                                # print(f'minimos{valoresminimovoltajesinmedia}')
+                                # print(f'samplings 0: {len(list_FPVoltage)}')
+                                # print(f'samplings 1: {len(NoVoltageoffset)}')
+
+                            #Valor dc de corriente
+                            valoresmaxcorriente=getMaxValues(list_FPCurrent, 20)
+                            valoresmincorriente=getMinValues(list_FPCurrent, 20)
+                            maximocorriente = np.median(valoresmaxcorriente)
+                            minimocorriente = np.median(valoresmincorriente)
+        
+                            mediadccorriente = (maximocorriente+minimocorriente)/2
+                            
+                            # Valores maximo y minimos de corriente
+                            NoCurrentoffset=list_FPCurrent-mediadccorriente
+                            maximocorriente2sinmedia=getMaxValues(NoCurrentoffset, 20)
+                            minimocorriente2sinmedia=getMinValues(NoCurrentoffset, 20)
+                            maximocorriente2 = np.median(maximocorriente2sinmedia)
+                            minimocorriente2 = np.median(minimocorriente2sinmedia)
+                            #print(f'corriente max: {maximocorriente2 }')
+                            #print(f'corriente min: {minimocorriente2 }')
+                            NoCurrentoffset2 = EscalaCorriente(NoCurrentoffset)
+                            #NoCurrentoffset2 = NoCurrentoffset/125  #210 con res
+
+
+                            vrms3=VoltajeRms(NoVoltageoffset2)
+                            phasevoltaje3,FDvoltaje3=VoltageFFT(NoVoltageoffset2,samplings)
+                            graphVoltage3(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
                             graphFFT(NoVoltageoffset2,samplings)
                             
                             
@@ -1141,38 +1310,48 @@ def fase1():
      ejeycurrent31=ejeycurrent31,
      ejeycurrent32=ejeycurrent32,
      fp1=round(FP1,2),
-     fp2=round(FP2,2),
+     cosphi=round(cosphi,2),
      ApFase1=round(ApFase1,2),
      AcFase1=round(AcFase1,2),
      ReacFase1=round(ReacFase1,2),
      energyfase1=round(energyFase1,3),
      values2=values2,
      #thdv=round(DATCorriente,2),
-     thdi=round(DATCorriente,2),
-     labelsfftv=labelsfftv,
-     valuesfftv=valuesfftv,
-     largoejey=largoejey,
-     labelsffti=labelsffti,
-     valuesffti=valuesffti,
-     largoejeyi=largoejeyi,
-     tempESP32=tempESP32,
-     CPU_temp=CPU_temp,
-     #humedad=humedad,
-     #temperatura=temperatura,
-     #ip_address=ip_address,
-     largoejeyI=largoejeyI,
-     largoejeyI2=largoejeyI2,
-     valuesvoltage=valuesvoltage,
-     valuescurrent=valuescurrent,
-     labelsfp=labelsfp,
+     DATCorriente=round(DATCorriente,2),
+     labelsfftv1=labelsfftv1,
+     valuesfftv1=valuesfftv1,
+     largoejeyv1=largoejeyv1,
+     labelsfftv2=labelsfftv2,
+     valuesfftv2=valuesfftv2,
+     largoejeyv2=largoejeyv2,
+     labelsfftv3=labelsfftv3,
+     valuesfftv3=valuesfftv3,
+     largoejeyv3=largoejeyv3,
+     labelsffti1=labelsffti1,
+     valuesffti1=valuesffti1,
+     largoejeyi1=largoejeyi1,
+     labelsffti2=labelsffti2,
+     valuesffti2=valuesffti2,
+     largoejeyi2=largoejeyi2,
+     labelsffti3=labelsffti3,
+     valuesffti3=valuesffti3,
+     largoejeyi3=largoejeyi3,
+     #tempESP32=tempESP32,
+     #CPU_temp=CPU_temp,
      Aparente2=round(Aparente2,1),
      Activa2=round(Activa2,1),
      Reactiva2=round(Reactiva2,1),
      FDCorriente=round(FDCorriente,2),
+     #humedad=humedad,
+     #temperatura=temperatura,
+     #ip_address=ip_address,
+     labelsfp=labelsfp,
+     valuesvoltage=valuesvoltage,
+     valuescurrent=valuescurrent,
      maxvoltaje=maxvoltaje,
      minvoltaje=minvoltaje)   
 
-     
+
 @app.route('/<changePin>/<action>')
 def action(changePin, action):
 
