@@ -1,12 +1,736 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fase1</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Medidor SER</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="../static/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="../static/css/font.css">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="../static/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="../static/css/custom.css">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="../static/img/favicon.ico">
+  <!-- Tweaks for older IEs-->
+  <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
-<body>
-    <h2>{{fase}}</h2>
+
+<body onload="load()">
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="search-panel">
+        <div class="search-inner d-flex align-items-center justify-content-center">
+          <div class="close-btn">Close <i class="fa fa-close"></i></div>
+          <form id="searchForm" action="#">
+            <div class="form-group">
+              <input type="search" name="search" placeholder="What are you searching for...">
+              <button type="submit" class="submit">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Header--><a href="index.html" class="navbar-brand">
+            <div class="brand-text brand-big visible text-uppercase"><strong
+                class="text-primary">SER</strong><strong>SpA</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">S</strong><strong>ER</strong></div>
+          </a>
+          <!-- Sidebar Toggle Btn-->
+          <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+          
+        </div>
+        <div class="right-menu list-inline no-margin-bottom">
+          <div class="list-inline-item"><a href="#" class="search-open nav-link"><i
+                class="icon-magnifying-glass-browser"></i></a></div>
+          <!-- Log out               -->
+          <div class="list-inline-item logout"> <a id="logout" href="login.html" class="nav-link"> <span
+                class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <!-- Sidebar Navigation-->
+    <nav id="sidebar">
+      <!-- Sidebar Header-->
+      <div class="sidebar-header d-flex align-items-center">
+        <!-- <div class="avatar"><img src="../static/img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>-->
+        <div class="title">
+          <h1 class="h5">Ubicación:</h1>
+          <p>Santa Cristina</p>
+          <h1 class="h5">IP Address</Address></h1>
+          <p>{{ip_address}}</address></p>
+
+        </div>
+      </div>
+      <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+      <ul class="list-unstyled">
+        <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
+        <li><a href="fase1.html"> <i class="icon-dashboard"></i>Fase 1 </a></li>
+        <li><a href="fase2.html"> <i class="icon-dashboard"></i>Fase 2 </a></li>
+        <li><a href="fase3.html"> <i class="icon-dashboard"></i>Fase 3 </a></li>
+      </ul><span class="heading">Extras</span>
+      <ul class="list-unstyled">
+        <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
+      </ul>
+    </nav>
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+      <div class="page-header">
+        <div class="container-fluid">
+          <h2 class="h5 no-margin-bottom">Dashboard Fase 1</h2>
+        </div>
+      </div>
+      
+        <!-- Cuadrados con valores -->
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Voltaje</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{vrms}}V</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Corriente</strong>
+                  </div>
+                  <div class="d-block dashtext-2">{{irms}} A</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Energia</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{energyfase1}} KWh</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Activa</strong>
+                  </div>
+                  <div class="d-block dashtext-2">{{Activa2}} W</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Reactiva</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{Reactiva2}} VAR</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Aparente</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{Aparente2}} VA</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FD Corriente</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{FDCorriente}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>cos phi</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{fp2}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>DAT</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{thdi}} %</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FP</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{fp1}}</strong></div>
+                </div>
+              </div>
+            </div>
+      </section>
+      <section class="no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="line-cahrt block">
+                <canvas id="line2variables"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-6">
+                <div class="line-cahrt block">
+                  <canvas id="lineCahrt0"></canvas>
+                </div>
+              </div>
+            <div class="col-lg-6">
+              <div class="line-cahrt block">
+                <canvas id="lineCahrt1"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>  
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="line-cahrt block">
+                <canvas id="lineCahrt2"></canvas>
+              </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="line-cahrt block">
+                  <canvas id="lineCahrt3"></canvas>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section> 
+      
+      <section class="margin-bottom-sm">
+        <div class="container-fluid">
+          <div class="row d-flex align-items-stretch">
+            <div class="col-lg-4">
+              <div class="stats-with-chart-1 block">
+                <div class="title"> <strong class="d-block">Voltajes registrados</strong><span class="d-block"></span>
+                </div>
+                <div class="row d-flex align-items-end justify-content-between">
+                  <div class="col-5">
+                    <div class="text"><strong class="d-block dashtext-3">225 V</strong><span
+                        class="d-block">Fecha</span><small class="d-block"></small></div>
+                  </div>
+                  <div class="col-7">
+                    <div class="bar-chart chart">
+                      <canvas id="salesBarChart1"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="stats-with-chart-1 block">
+                <div class="title"> <strong class="d-block">Corrientes registradas</strong><span class="d-block"></span>
+                </div>
+                <div class="row d-flex align-items-end justify-content-between">
+                  <div class="col-5">
+                    <div class="text"><strong class="d-block dashtext-2">3 A</strong><span
+                        class="d-block">Fecha</span><small class="d-block"></small></div>
+                  </div>
+                  <div class="col-7">
+                    <div class="bar-chart chart">
+                      <canvas id="salesBarChart2"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="stats-with-chart-1 block">
+                <div class="title"> <strong class="d-block">Potencias registrados</strong><span class="d-block"></span>
+                </div>
+                <div class="row d-flex align-items-end justify-content-between">
+                  <div class="col-5">
+                    <div class="text"><strong class="d-block dashtext-3">500 W</strong><span
+                        class="d-block">Fecha</span><small class="d-block"></small></div>
+                  </div>
+                  <div class="col-7">
+                    <div class="bar-chart chart">
+                      <canvas id="salesBarChart3"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="stats-with-chart-2 block">
+                <div class="title"><strong class="d-block">Voltajes</strong><span class="d-block"></span></div>
+                <div class="piechart chart">
+                  <canvas id="pieChartHome1"></canvas>
+                  <div class="text"><strong class="d-block">660</strong><span class="d-block">Voltaje rms</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="stats-with-chart-2 block">
+                <div class="title"><strong class="d-block">Corrientes</strong><span class="d-block"></span></div>
+                <div class="piechart chart">
+                  <canvas id="pieChartHome2"></canvas>
+                  <div class="text"><strong class="d-block">30</strong><span class="d-block">Amperes rms</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="stats-with-chart-2 block">
+                <div class="title"><strong class="d-block">Potencias</strong><span class="d-block"></span></div>
+                <div class="piechart chart">
+                  <canvas id="pieChartHome3"></canvas>
+                  <div class="text"><strong class="d-block">10000</strong><span class="d-block">Watts por hora</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="footer">
+        <div class="footer__block block no-margin-bottom">
+          <div class="container-fluid text-center">
+            <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+            <p class="no-margin-bottom">2021 &copy; Your company. Design by <a
+                href="https://bootstrapious.com/p/bootstrap-4-dark-admin">Bootstrapious</a>.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- JavaScript files-->
+  
+  <script src="../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/vendor/jquery.cookie/jquery.cookie.js"> </script>
+  <script src="../static/vendor/chart.js/Chart.min.js"></script>
+  <script src="../static/vendor/jquery-validation/jquery.validate.min.js"></script>
+  <script src="../static/js/charts-home.js"></script>
+  <script src="../static/js/front.js"></script>
+  
+  <script>
+      // ------------------------------------------------------- //
+      // Line Chart
+      // ------------------------------------------------------ //
+  
+      var legendState = true;
+      if ($(window).outerWidth() < 576) {
+        legendState = false;
+      }
+  
+      var LINECHART = $('#line2variables');
+      var myLineChart = new Chart(LINECHART, {
+        type: 'line',
+        options: {
+        scales: {
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }],
+            yAxes: [{
+              ticks: {
+                max: {{maxvoltaje | safe}},
+                min: {{minvoltaje | safe}}
+              },
+              display: true,
+              gridLines: {
+                display: false
+              }
+            }]
+        },
+        legend: {
+          display: legendState
+        }
+      },
+        data: {
+          labels: {{ labelsfp | safe }},
+         datasets: [
+          {
+               label: "Voltaje Fase 1",
+               data: {{ valuesvoltage | safe }},
+               fill: true,
+               lineTension: 0.2,
+               backgroundColor: "transparent",
+               borderColor: '#864DD9',
+               pointBorderColor: '#864DD9',
+               pointHoverBackgroundColor: '#864DD9',
+               borderCapStyle: 'butt',
+               borderDash: [],
+               borderDashOffset: 0.0,
+               borderJoinStyle: 'miter',
+               borderWidth: 1,
+               pointBackgroundColor: "#fff",
+               pointBorderWidth: 1,
+               pointHoverRadius: 2,
+               pointHoverBorderColor: "#fff",
+               pointHoverBorderWidth: 1,
+               pointRadius: 1,
+               pointHitRadius: 0,
+               spanGaps: false
+           } , {
+               label: "Corriente Fase 1",
+               data: {{ valuescurrent | safe }},
+               fill: true,
+               lineTension: 0.2,
+               backgroundColor: "transparent",
+               borderColor: "#EF8C99",
+               pointBorderColor: '#EF8C99',
+               pointHoverBackgroundColor: "#EF8C99",
+               borderCapStyle: 'butt',
+               borderDash: [],
+               borderDashOffset: 0.0,
+               borderJoinStyle: 'miter',
+               borderWidth: 1,
+               pointBackgroundColor: "#fff",
+               pointBorderWidth: 1,
+               pointHoverRadius: 1,
+               pointHoverBorderColor: "#fff",
+               pointHoverBorderWidth: 2,
+               pointRadius: 1,
+               pointHitRadius: 2,
+               spanGaps: false
+           }      
+         ]
+       }
+    });
+
+  </script>
+  
+ <script>
+
+
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#lineCahrt0');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejeyV | safe}},
+              min: {{largoejeyV2 | safe}}
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+      }
+    },
+      data: {
+        labels: {{ labels | safe }},
+       datasets: [
+        {
+        label: "Voltaje Fase 1",
+        data: {{ values | safe }},
+        fill: true,
+        lineTension: 5,
+        backgroundColor: "transparent",
+        borderColor: '#864DD9',
+        pointBorderColor: '#864DD9',
+        pointHoverBackgroundColor: '#864DD9',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        borderWidth: 1,
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 2,
+        pointHoverBorderColor: "#fff",
+        pointHoverBorderWidth: 1,
+        pointRadius: 1,
+        pointHitRadius: 0,
+        spanGaps: false
+        }
+       ]
+      }
+     });
+    </script>
+      
+      <script>
+        // ------------------------------------------------------- //
+          // Line Chart
+          // ------------------------------------------------------ //
+      
+          var legendState = true;
+          if ($(window).outerWidth() < 576) {
+            legendState = false;
+          }
+      
+          var LINECHART = $('#lineCahrt1');
+          var myLineChart = new Chart(LINECHART, {
+            type: 'line',
+            options: {
+            scales: {
+              xAxes: [{
+                display: true,
+                gridLines: {
+                  display: false
+                }
+              }],
+                yAxes: [{
+                  ticks: {
+                    max: {{largoejeyI | safe}},
+                    min: {{largoejeyI2 | safe}}
+                  },
+                  display: true,
+                  gridLines: {
+                    display: false
+                  }
+                }]
+            },
+            legend: {
+              display: legendState
+            }
+          },
+            data: {
+              labels: {{ labelsI | safe }},
+             datasets: [      
+             {
+             label: "Corriente Fase 1",
+             data: {{ values2 | safe }},
+             fill: true,
+             lineTension: 5,
+             backgroundColor: "transparent",
+             borderColor: "#EF8C99",
+             pointBorderColor: '#EF8C99',
+             pointHoverBackgroundColor: "#EF8C99",
+             borderCapStyle: 'butt',
+             borderDash: [],
+             borderDashOffset: 0.0,
+             borderJoinStyle: 'miter',
+             borderWidth: 1,
+             pointBackgroundColor: "#fff",
+             pointBorderWidth: 1,
+             pointHoverRadius: 1,
+             pointHoverBorderColor: "#fff",
+             pointHoverBorderWidth: 2,
+             pointRadius: 1,
+             pointHitRadius: 2,
+             spanGaps: false
+                      }
+              ]
+            }
+        });
+</script> 
+<script>
+  // ------------------------------------------------------- //
+    // Line Chart
+    // ------------------------------------------------------ //
+   //electrohydro.cl
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#lineCahrt2');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejey | safe}},
+              min: 0
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+       }
+      },
+        data: {
+          labels: {{ labelsfftv | safe }},
+          datasets: [
+          {
+          label: "FFT Voltaje Fase 1",
+          data: {{ valuesfftv | safe }},
+          fill: true,
+          lineTension: 0.1,
+          backgroundColor: "transparent",
+          borderColor: '#864DD9',
+          pointBorderColor: '#864DD9',
+          pointHoverBackgroundColor: '#864DD9',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 0.5,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 1,
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 1,
+          pointRadius: 1,
+          pointHitRadius: 1,
+          spanGaps: false
+          }
+        ]
+      }
+   });
+</script>
+<script>
+  // ------------------------------------------------------- //
+    // Line Chart
+    // ------------------------------------------------------ //
+   //electrohydro.cl
+    var legendState = true;
+    if ($(window).outerWidth() < 576) {
+      legendState = false;
+    }
+
+    var LINECHART = $('#lineCahrt3');
+    var myLineChart = new Chart(LINECHART, {
+      type: 'line',
+      options: {
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: false
+          }
+        }],
+          yAxes: [{
+            ticks: {
+              max: {{largoejeyi | safe}},
+              min: 0
+            },
+            display: true,
+            gridLines: {
+              display: false
+            }
+          }]
+      },
+      legend: {
+        display: legendState
+       }
+      },
+        data: {
+          labels: {{ labelsffti | safe }},
+          datasets: [
+          {
+          label: "FFT Corriente Fase 1",
+          data: {{ valuesffti | safe }},
+          fill: true,
+          lineTension: 0.1,
+          backgroundColor: "transparent",
+          borderColor: '#864DD9',
+          pointBorderColor: '#864DD9',
+          pointHoverBackgroundColor: '#864DD9',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 2,
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 1,
+          pointRadius: 1,
+          pointHitRadius: 1,
+          spanGaps: false
+          }
+        ]
+      }
+   });
+</script>
+    
+  
+
 </body>
+
 </html>

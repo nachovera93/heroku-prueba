@@ -1,25 +1,226 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Heroku Flask Template</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-    </head>
-    <body>
-        <h1 id="tittle">Heroku Flask Template</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="https://github.com/vetronus/heroku-flask-template">SOURCE CODE(GitHub)</a></li>
-                <li><a href="http://parthsarthee.com/">PARTH SARTHEE(Author)</a></li>
-                <li><a href="http://aroxbit.com">AROXBIT(Awesome Indie Startup)</a></li>
-            </ul>
-        </nav>
-        <h2>What is Heroku Flask Template</h2>
-        <p>
-            Heroku Flask Template is a simple web app programmed in Python-3 using flask micro-framework. It is created for begginers to understand the basics of creating a flask web app and deploying it on the Heroku. It can also be used as a template to create your new flask web apps which can then easily be deployable on Heroku.
-        </p><br>
-        <h3>You can download this plugin, or modify its source code from <a href="https://github.com/vetronus/heroku-flask-template">GitHub</a></h3>
-    </body>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Medidor SER</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="../static/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="../static/css/font.css">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="../static/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="../static/css/custom.css">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="../static/img/favicon.ico">
+
+  
+  <!-- Tweaks for older IEs-->
+  <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+   <style>
+        .button {
+             background-color: #864DD9; 
+             border: 2px solid #6a6c70; 
+             color: #a5a7ab;
+             padding: 20px;
+             text-align: center;
+             text-decoration: none;
+             display: inline-block;
+             font-size: 24px;
+             margin: 4px 2px;
+             cursor: pointer;
+         }
+
+        .button1 {border-radius: 8px;}
+
+        .button1:hover {
+          background-color: #e95f71;
+          color: #a5a7ab;
+        }
+    </style>    
+           
+          
+</head>
+
+<body onload="load()">
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="search-panel">
+        <div class="search-inner d-flex align-items-center justify-content-center">
+          <div class="close-btn">Close <i class="fa fa-close"></i></div>
+          <form id="searchForm" action="#">
+            <div class="form-group">
+              <input type="search" name="search" placeholder="Que buscas?">
+              <button type="submit" class="submit">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Header--><a href="index.html" class="navbar-brand">
+            <div class="brand-text brand-big visible text-uppercase"><strong
+                class="text-primary">SER</strong><strong>SpA</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">S</strong><strong>ER</strong></div>
+          </a>
+          <!-- Sidebar Toggle Btn-->
+          <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+        </div>
+        <div class="right-menu list-inline no-margin-bottom">
+          <div class="list-inline-item"><a href="#" class="search-open nav-link">
+            <h1 class="h5">{{current_time}}</h1></a></div>
+      
+                 
+          <!-- Log out               -->
+          <div class="list-inline-item logout"> <a id="logout" href="login.html" class="nav-link"> <span
+                class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <!-- Sidebar Navigation-->
+    <nav id="sidebar">
+      <!-- Sidebar Header-->
+      <div class="sidebar-header d-flex align-items-center">
+        <!-- <div class="avatar"><img src="../static/img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>-->
+        <div class="title">
+          <h1 class="h5">Ubicación:</h1>
+          <p>Santa Cristina</p>
+          <h1 class="h5">IP Address</Address></h1>
+          <p>{{ip_address}}</address></p>
+
+        </div>
+      </div>
+      <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+      <ul class="list-unstyled">
+        <li class="active"><a href="/index.html"> <i class="icon-home"></i>Home </a></li>
+        <li><a href="fase1.html"> <i class="icon-dashboard"></i>Fase 1 </a></li>
+        <li><a href="fase2.html"> <i class="icon-dashboard"></i>Fase 2 </a></li>
+        <li><a href="fase3.html"> <i class="icon-dashboard"></i>Fase 3 </a></li>
+      </ul><span class="heading">Extras</span>
+      <ul class="list-unstyled">
+        <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
+      </ul>
+    </nav>
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+      <div class="page-header">
+        <div class="container-fluid">
+          <h2 class="h5 no-margin-bottom">Dashboard Principal</h2>
+        </div>
+      </div>
+      <section class="no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="stats-2-block block d-flex">
+                <div class="stats-2 d-flex">
+                  <div class="stats-2-arrow low"><i class="fa fa-caret-down"></i></div>
+                  <div class="stats-2-content"><strong class="d-block">{{temperatura}}°</strong><span class="d-block">T° Caja</span>
+                    <div class="progress progress-template progress-small">
+                      <div role="progressbar" style="width: 100%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-2"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="stats-2 d-flex">
+                  <div class="stats-2-arrow height"><i class="fa fa-caret-up"></i></div>
+                  <div class="stats-2-content"><strong class="d-block">{{humedad}}%</strong><span class="d-block">Humedad Caja</span>
+                    <div class="progress progress-template progress-small">
+                      <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="stats-2-block block d-flex">
+                <div class="stats-2 d-flex">
+                  <div class="stats-2-arrow low"><i class="fa fa-caret-down"></i></div>
+                  <div class="stats-2-content"><strong class="d-block">{{CPU_temp}}°</strong><span class="d-block">T° Raspberry</span>
+                    <div class="progress progress-template progress-small">
+                      <div role="progressbar" style="width: 60%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-2"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="stats-2 d-flex">
+                  <div class="stats-2-arrow height"><i class="fa fa-caret-up"></i></div>
+                  <div class="stats-2-content"><strong class="d-block">{{tempESP32}}°</strong><span class="d-block">T° ESP32</span>
+                    <div class="progress progress-template progress-small">
+                      <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-4 col-sm-6">
+                <div class="statistic-block block">
+                  <div class="progress-details d-flex align-items-end justify-content-between">
+                   <div class="stats-2-block block d-flex">
+                     <div class="stats-2 d-flex">
+                  <div class="stats-2-arrow low"><i class="fa fa-caret-down"></i></div>
+                {% for pin in pins %}
+                    <h4>{{ pins[pin].name }} {% if pins[pin].state == true %}
+                     Está <h4><strong>Encendido</strong></h4>
+                         <a href="/{{pin}}/off" class="button button1" role="button">Apagar</a>
+                       </div>
+                     </div>
+                      {% else %}
+                         Está <h4><strong>Apagado</strong></h4>
+                         <a href="/{{pin}}/on" class="button button1" role="button">Encender</a>
+                      {% endif %}
+                    {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </section>
+      
+      <footer class="footer">
+        <div class="footer__block block no-margin-bottom">
+          <div class="container-fluid text-center">
+            <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+            <p class="no-margin-bottom">2021 &copy; SER SpA. Design by <a
+                href="https://bootstrapious.com/p/bootstrap-4-dark-admin">Bootstrapious</a>.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- JavaScript files-->
+  
+  <script src="../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/vendor/jquery.cookie/jquery.cookie.js"> </script>
+  <script src="../static/vendor/chart.js/Chart.min.js"></script>
+  <script src="../static/vendor/jquery-validation/jquery.validate.min.js"></script>
+  <script src="../static/js/charts-home.js"></script>
+  <script src="../static/js/front.js"></script>
+  
+  
+
+  
+</body>
+
 </html>
