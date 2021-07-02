@@ -107,17 +107,43 @@
                   <div class="title">
                     <strong>Voltaje CGE Fase 1</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{vrms1}}V</strong></div>
+                  <div class="text"><strong class="d-block dashtext-3">{{vrms1}}Vrms</strong></div>
                 </div>
               </div>
             </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Voltaje Paneles Fase 1</strong>
+                  </div>
+                  <div class="d-block dashtext-2">{{vrms2}} Vrms</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Voltaje Carga Fase 1</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{vrms3}} Vrms</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
             <div class="col-md-4 col-sm-6">
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
                     <strong>Corriente CGE Fase 1</strong>
                   </div>
-                  <div class="d-block dashtext-2">{{irms1}} A</div>
+                  <div class="d-block dashtext-2">{{irms1}} Arms</div>
                 </div>
               </div>
             </div>
@@ -125,9 +151,54 @@
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
-                    <strong>Energia</strong>
+                    <strong>Corriente Paneles Fase 1</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{energyfase1}} KWh</strong></div>
+                  <div class="text"><strong class="d-block dashtext-3">{{irms2}} Arms</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Corriente Carga Fase 1</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{irms3}} Arms</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Activa CGE</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{ActivaCGEFase1}} W</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Activa Paneles</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{ActivaPanelesFase1}} W</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Activa Carga</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{ActivaCargaFase1}} W</strong></div>
                 </div>
               </div>
             </div>
@@ -141,9 +212,9 @@
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
-                    <strong>Pot Activa</strong>
+                    <strong>Pot Aparente CGE</strong>
                   </div>
-                  <div class="d-block dashtext-2">{{Activa2}} W</div>
+                  <div class="text"><strong class="d-block dashtext-3">{{AparenteCGEFase1}} VA</strong></div>
                 </div>
               </div>
             </div>
@@ -151,9 +222,9 @@
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
-                    <strong>Pot Reactiva</strong>
+                    <strong>Pot Aparente paneles</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{Reactiva2}} VAR</strong></div>
+                  <div class="text"><strong class="d-block dashtext-2">{{AparentePanelesFase1}} VA</strong></div>
                 </div>
               </div>
             </div>
@@ -161,44 +232,9 @@
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
-                    <strong>Pot Aparente</strong>
+                    <strong>Pot AparenteCarga</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-2">{{Aparente2}} VA</strong></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      <section class="no-padding-top no-padding-bottom">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-4 col-sm-6">
-              <div class="statistic-block block">
-                <div class="progress-details d-flex align-items-end justify-content-between">
-                  <div class="title">
-                    <strong>FD Corriente</strong>
-                  </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{FDCorriente}}</strong></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <div class="statistic-block block">
-                <div class="progress-details d-flex align-items-end justify-content-between">
-                  <div class="title">
-                    <strong>cos phi</strong>
-                  </div>
-                  <div class="text"><strong class="d-block dashtext-2">{{cosphi}}</strong></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <div class="statistic-block block">
-                <div class="progress-details d-flex align-items-end justify-content-between">
-                  <div class="title">
-                    <strong>DAT</strong>
-                  </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{DATCorriente}} %</strong></div>
+                  <div class="text"><strong class="d-block dashtext-3">{{AparenteCargaFase1}} VA</strong></div>
                 </div>
               </div>
             </div>
@@ -212,13 +248,181 @@
               <div class="statistic-block block">
                 <div class="progress-details d-flex align-items-end justify-content-between">
                   <div class="title">
-                    <strong>FP</strong>
+                    <strong>Pot Reactiva CGE</strong>
                   </div>
-                  <div class="text"><strong class="d-block dashtext-3">{{fp1}}</strong></div>
+                  <div class="text"><strong class="d-block dashtext-3">{{ReactivaCGEFase1}} VAR</strong></div>
                 </div>
               </div>
             </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Reactiva Paneles</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{ReactivaPanelesFase1}} VAR</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Pot Reactiva Carga</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{ReactivaCargaFase1}} VAR</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FP CGE</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{FPCGE}} </strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FP Paneles</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{FPPaneles}} </strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FP Carga</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{FPCarga}} </strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FD Voltaje CGE</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{FDvoltajeCGE}} </strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FD Voltaje Paneles</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{FDvoltajePaneles}} </strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FD Voltaje Carga</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{FDvoltajeCarga}} </strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Energia CGE</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{energyCGEFase1}} kWh</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Energia Paneles</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{energyPanelesFase1}} kWh</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>Energia Carga</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{energyCargaFase1}} kWh</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FD Corriente CGE</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{FDCorrienteCGE}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FD Corriente Paneles</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-2">{{FDCorrientePaneles}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="statistic-block block">
+                <div class="progress-details d-flex align-items-end justify-content-between">
+                  <div class="title">
+                    <strong>FD Corriente Carga</strong>
+                  </div>
+                  <div class="text"><strong class="d-block dashtext-3">{{FDCorrienteCarga}}</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
       <section class="no-padding-bottom">
         <div class="container-fluid">
           <div class="row">

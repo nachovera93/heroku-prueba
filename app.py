@@ -33,7 +33,7 @@ import serial
 #plt.style.use('ggplot')
 #from flask_moment import Moment
 import math
-#import board
+import board
 import adafruit_dht
 
 dhtDevice = adafruit_dht.DHT11(board.D18)
@@ -1108,13 +1108,13 @@ def received():
                             vrms1 = VoltajeRms(NoVoltageoffset2)
                             VoltageFFT(NoVoltageoffset2,samplings,1)
                             graphVoltage1(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
-                            graphFFT(NoVoltageoffset2,samplings)
+                            graphFFTV1(NoVoltageoffset2,samplings)
                             
                             
                             irms1 = CorrienteRms(NoCurrentoffset2)
                             CurrentFFT(NoCurrentoffset2,samplings,1)
-                            graphCurrent(NoCurrentoffset2,samplings)
-                            graphFFTI(NoCurrentoffset2,samplings)
+                            graphCurrent3(NoCurrentoffset2,samplings)
+                            graphFFTI3(NoCurrentoffset2,samplings)
                             #maximo=max(list_FPCurrent[1000:1700])
                             #minimo=min(list_FPCurrent[1000:1700])
                             #diferencia=maximo-minimo
@@ -1186,13 +1186,13 @@ def received():
                             vrms2=VoltajeRms(NoVoltageoffset2)
                             VoltageFFT(NoVoltageoffset2,samplings,2)
                             graphVoltage2(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
-                            graphFFT(NoVoltageoffset2,samplings)
+                            graphFFTV2(NoVoltageoffset2,samplings)
                             
                             
                             irms2 = CorrienteRms(NoCurrentoffset2)
                             CurrentFFT(NoCurrentoffset2,samplings,2)
-                            graphCurrent(NoCurrentoffset2,samplings)
-                            graphFFTI(NoCurrentoffset2,samplings)
+                            graphCurrent2(NoCurrentoffset2,samplings)
+                            graphFFTI2(NoCurrentoffset2,samplings)
                             #maximo=max(list_FPCurrent[1000:1700])
                             #minimo=min(list_FPCurrent[1000:1700])
                             #diferencia=maximo-minimo
@@ -1264,13 +1264,13 @@ def received():
                             vrms3=VoltajeRms(NoVoltageoffset2)
                             VoltageFFT(NoVoltageoffset2,samplings,3)
                             graphVoltage3(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
-                            graphFFT(NoVoltageoffset2,samplings)
+                            graphFFTV3(NoVoltageoffset2,samplings)
                             
                             
                             irms3 = CorrienteRms(NoCurrentoffset2)
                             CurrentFFT(NoCurrentoffset2,samplings,3)
-                            graphCurrent(NoCurrentoffset2,samplings)
-                            graphFFTI(NoCurrentoffset2,samplings)
+                            graphCurrent3(NoCurrentoffset2,samplings)
+                            graphFFTI3(NoCurrentoffset2,samplings)
                             #maximo=max(list_FPCurrent[1000:1700])
                             #minimo=min(list_FPCurrent[1000:1700])
                             #diferencia=maximo-minimo
