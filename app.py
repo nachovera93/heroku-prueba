@@ -34,9 +34,9 @@ import serial
 #from flask_moment import Moment
 import math
 import board
-import adafruit_dht
+#import adafruit_dht
 
-dhtDevice = adafruit_dht.DHT11(board.D18)
+#dhtDevice = adafruit_dht.DHT11(board.D18)
 
 app = Flask(__name__)
 
@@ -163,6 +163,7 @@ def getTEMP():
 
 temperatura = 0.0
 humedad = 0.0
+"""
 def temphum():
     global temperatura
     global humedad
@@ -180,13 +181,13 @@ def temphum():
     #except Exception as error:
      #   dhtDevice.exit()
       #  raise error 
+"""
 
-global puerta
-global start
-global end
 
 def distance():
-    
+    global puerta
+    global start
+    global end  
     try:
          GPIO.output(4, True)
          time.sleep(0.00001)
@@ -1305,7 +1306,7 @@ def received():
                   if (len(np_array)>0 and len(np_array)<=2):
                           global tempESP32
                           getTEMP()
-                          temphum()
+                          #temphum()
                           #distance()
                           tempESP32 = round(np_array[0],0)
                           #print(f'array: {np_array}')
