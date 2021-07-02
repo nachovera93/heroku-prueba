@@ -772,14 +772,8 @@ def VoltageFFT(list_fftVoltages, samplings,i):
               
 
 global DATCorrienteCGE
-global DATCorrientePaneles
-global DATCorrienteCarga
-global FDCorrienteCGE
-global FDCorrientePaneles
-global FDCorrienteCarga
 global a2
-global FDCorrienteCGE
-global DATCorrienteCGE 
+global FDCorrienteCGE 
 global phasecorrienteCGE
 global FDCorrientePaneles
 global DATCorrientePaneles
@@ -1384,7 +1378,6 @@ def index():
       
       return render_template('index.html',**templateData,
       puerta=puerta,
-      energyfase1=round(energyFase1,3),
       tempESP32=tempESP32,
       CPU_temp=CPU_temp,
       humedad=humedad,
@@ -1427,14 +1420,7 @@ def fase1():
      energyCGEFase1=energyCGEFase1    
      energyPanelesFase1=energyPanelesFase1
      energyCargaFase1=energyCargaFase1
-     
-     
-     phasevoltaje1=phasevoltaje1,
-     FDvoltaje1=FDvoltaje1,
-     phasevoltaje2=phasevoltaje2,
-     FDvoltaje2=FDvoltaje2,
-     phasevoltaje3=phasevoltaje3,
-     FDvoltaje3=FDvoltaje3,
+
 
      DATVoltajeCGE=DATVoltajeCGE,
      phasevoltajeCGE=phasevoltajeCGE,
@@ -1446,12 +1432,7 @@ def fase1():
      phasevoltajeCarga=phasevoltajeCarga,
      FDvoltajeCarga=FDvoltajeCarga,
 
-     DATCorrienteCGE=DATCorrienteCGE
-     DATCorrientePaneles=DATCorrientePaneles
-     DATCorrienteCarga=DATCorrienteCarga
-     FDCorrienteCGE=FDCorrienteCGE
-     FDCorrientePaneles=FDCorrientePaneles
-     FDCorrienteCarga=FDCorrienteCarga
+     
      FDCorrienteCGE=FDCorrienteCGE
      DATCorrienteCGE =DATCorrienteCGE 
      phasecorrienteCGE=phasecorrienteCGE
@@ -1556,7 +1537,6 @@ def action(changePin, action):
      }
 
      return render_template('index.html', **templateData, puerta=puerta,
-      energyfase1=round(energyFase1,3),
       tempESP32=tempESP32,
       CPU_temp=CPU_temp,
       humedad=humedad,
