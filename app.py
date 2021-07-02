@@ -793,9 +793,7 @@ global FPPaneles
 global cosphiPaneles
 global FPCarga
 global cosphiCarga
-global sincvoltaje1 
-global sincvoltaje2 
-global sincvoltaje3 
+ 
 
 DATCorrienteCGE = 0.0
 DATCorrientePaneles= 0.0
@@ -818,9 +816,7 @@ FPPaneles= 0.0
 cosphiPaneles= 0.0
 FPCarga= 0.0
 cosphiCarga= 0.0
-sincvoltaje1 = 0
-sincvoltaje2 = 0
-sincvoltaje3= 0
+
 
 def CurrentFFT(list_fftVoltages, samplings, i):
     
@@ -1440,6 +1436,37 @@ def fase1():
      phasevoltaje3=phasevoltaje3,
      FDvoltaje3=FDvoltaje3,
 
+     DATVoltajeCGE=DATVoltajeCGE,
+     phasevoltajeCGE=phasevoltajeCGE,
+     FDvoltajeCGE=FDvoltajeCGE,
+     DATVoltajePaneles=DATVoltajePaneles,
+     phasevoltajePaneles=phasevoltajePaneles,
+     FDvoltajePaneles=FDvoltajePaneles,
+     DATVoltajeCarga=DATVoltajeCarga,
+     phasevoltajeCarga=phasevoltajeCarga,
+     FDvoltajeCarga=FDvoltajeCarga,
+
+     DATCorrienteCGE=DATCorrienteCGE
+     DATCorrientePaneles=DATCorrientePaneles
+     DATCorrienteCarga=DATCorrienteCarga
+     FDCorrienteCGE=FDCorrienteCGE
+     FDCorrientePaneles=FDCorrientePaneles
+     FDCorrienteCarga=FDCorrienteCarga
+     FDCorrienteCGE=FDCorrienteCGE
+     DATCorrienteCGE =DATCorrienteCGE 
+     phasecorrienteCGE=phasecorrienteCGE
+     FDCorrientePaneles=FDCorrientePaneles
+     DATCorrientePaneles=DATCorrientePaneles
+     phasecorrientePaneles=phasecorrientePaneles
+     FDCorrienteCarga=FDCorrienteCarga
+     DATCorrienteCarga=DATCorrienteCarga
+     phasecorrienteCarga=phasecorrienteCarga
+     FPCGE=FPCGE
+     cosphiCGE=cosphiCGE
+     FPPaneles=FPPaneles
+     cosphiPaneles=cosphiPaneles
+     FPCarga=FPCarga
+     cosphiCarga=cosphiCarga
 
      labelsvoltaje1=labelsvoltaje1,
      labelsvoltaje2=labelsvoltaje2,
