@@ -146,10 +146,10 @@ def get_cpuload():
     cpuload = psutil.cpu_percent(interval=1, percpu=False)
     return str(cpuload)
 
-global CPU_temp
+
 CPU_temp = 0.0
 def getTEMP():
-    
+    global CPU_temp
     CPU_temp = round(cpu_temp(),0)
     #print(f'temp cpu: {CPU_temp}')
     if CPU_temp > 50:
@@ -160,12 +160,12 @@ def getTEMP():
         GPIO.output(23, False)
 
 
-global temperatura
-global humedad
+
 temperatura = 0.0
 humedad = 0.0
 def temphum():
-    
+    global temperatura
+    global humedad
     try:
         temperatura = dhtDevice.temperature
         #temperature_f = temperature_c * (9 / 5) + 32
@@ -653,9 +653,7 @@ FDvoltajePaneles=0.0
 DATVoltajeCarga=0.0
 phasevoltajeCarga=0.0
 FDvoltajeCarga=0.0
-sincvoltaje1=0
-sincvoltaje2=0
-sincvoltaje3=0
+
 
 def VoltageFFT(list_fftVoltages, samplings,i):
     global j
@@ -669,9 +667,7 @@ def VoltageFFT(list_fftVoltages, samplings,i):
     global DATVoltajeCarga
     global phasevoltajeCarga
     global FDvoltajeCarga
-    global sincvoltaje1
-    global sincvoltaje2
-    global sincvoltaje3
+    
     #global FaseArmonicoFundamentalVoltaje
     N = len(list_fftVoltages)
     T = 1 / samplings
@@ -752,8 +748,9 @@ def VoltageFFT(list_fftVoltages, samplings,i):
            #print(f'FD Voltaje: {round(FD,2)}')
            #DATVoltaje = np.sqrt((valor**2-armonico1voltaje**2)/(armonico1voltaje**2))
 
-           sincvoltaje1 = 0
+           #sincvoltaje1 = 0
            if(j=="1"):
+                 global sincvoltaje1
                  phasevoltajeCGE = np.arctan(real[0]/(imag[0]))
                  #FaseArmonicoFundamentalVoltaje1=round(np.angle(complejo[0]),2)
                  FDvoltajeCGE = Magnitud1/SumMagnitudEficaz
@@ -761,8 +758,9 @@ def VoltageFFT(list_fftVoltages, samplings,i):
                  sincvoltaje1 = 1
                  #return phasevoltajeCGE,FDvoltajeCGE,DATVoltajeCGE
 
-           sincvoltaje2 = 0
+           #sincvoltaje2 = 0
            if(j=="2"):
+                 global sincvoltaje2
                  phasevoltajePaneles = np.arctan(real[0]/(imag[0]))
                  #FaseArmonicoFundamentalVoltaje1=round(np.angle(complejo[0]),2)
                  FDvoltajePaneles = Magnitud1/SumMagnitudEficaz
@@ -770,8 +768,9 @@ def VoltageFFT(list_fftVoltages, samplings,i):
                  sincvoltaje2 = 1
                  #return phasevoltajePaneles,FDvoltajePaneles,DATVoltajePaneles
 
-           sincvoltaje3 = 0
+           #sincvoltaje3 = 0
            if(j=="3"):
+                 global sincvoltaje3
                  phasevoltajeCGE = np.arctan(real[0]/(imag[0]))
                  #FaseArmonicoFundamentalVoltaje1=round(np.angle(complejo[0]),2)
                  FDvoltajeCarga = Magnitud1/SumMagnitudEficaz
@@ -902,6 +901,7 @@ def CurrentFFT(list_fftVoltages, samplings, i):
          
          #GradoArmonicoFundamentalCorriente=round(Grados,2)
          if(q=="1"):
+             global sincvoltaje1
              FDCorrienteCGE = Magnitud1/SumMagnitudEficaz
              print(f'FD corriente CGE: {FDCorrienteCGE}')
              DATCorrienteCGE = np.sqrt((SumMagnitudEficaz**2-Magnitud1**2)/(Magnitud1**2))
@@ -916,6 +916,7 @@ def CurrentFFT(list_fftVoltages, samplings, i):
                  #return FPCGE
          #sincvoltaje1=0 
          if(q=="2"):
+             global sincvoltaje2
              FDCorrientePaneles = Magnitud1/SumMagnitudEficaz
              print(f'FDCorrientePaneles : {FDCorrientePaneles }')
              DATCorrientePaneles = np.sqrt((SumMagnitudEficaz**2-Magnitud1**2)/(Magnitud1**2))
@@ -930,6 +931,7 @@ def CurrentFFT(list_fftVoltages, samplings, i):
                  #return FPCGE
          #sincvoltaje2=0 
          if(q=="3"):
+             global sincvoltaje3
              FDCorrienteCarga=Magnitud1/SumMagnitudEficaz
              DATCorrienteCarga = np.sqrt((SumMagnitudEficaz**2-Magnitud1**2)/(Magnitud1**2))
              phasecorrienteCarga = np.arctan(real[0]/(imag[0]))
@@ -996,42 +998,42 @@ ReactivaCargaFase1 = 0.0
 
 def Potencias(i,irms,vrms):
     i = str(i)
-    global a
-    global b
-    global c
-    global energyCGEFase1
-    global energyPanelesFase1
-    global energyCargaFase1
-    global AparenteCGEFase1
-    global ActivaCGEFase1
-    global ReactivaCGEFase1
-    global AparentePanelesFase1
-    global ActivaPanelesFase1
-    global ReactivaPanelesFase1
-    global AparenteCargaFase1
-    global ActivaCargaFase1
-    global ReactivaCargaFase1
-    if(i==1):
-          AparenteCG
-          EFase1 = vrms*irms
-          ActivaCGEFase1= np.abs(vrms*irms*cosphi)
-          ReactivaCGEFase1 = vrms*irms*np.sin(phasevoltaje-phasecorriente)
+    
+    if(i=="1"):
+          global a
+          global energyCGEFase1
+          global ActivaCGEFase1
+          global AparenteCGEFase1
+          global ReactivaCGEFase1
+          AparenteCGEFase1 = vrms*irms
+          ActivaCGEFase1= np.abs(vrms*irms*cosphiCGE)
+          ReactivaCGEFase1 = vrms*irms*np.sin(phasevoltajeCGE-phasecorrienteCGE)
           a2 = datetime.datetime.now()
           delta=(((a2 - a).microseconds)/1000+((a2 - a).seconds)*1000)/10000000000
           energyCGEFase1 += ActivaCGEFase1*delta*2.8
           a = datetime.datetime.now()
-    if(i==2):
+    if(i=="2"):
+          global b
+          global energyPanelesFase1
+          global AparentePanelesFase1
+          global ActivaPanelesFase1
+          global ReactivaPanelesFase1
           AparentePanelesFase1 = vrms*irms
-          ActivaPanelesFase1= np.abs(vrms*irms*cosphi)
-          ReactivaPanelesFase1 = vrms*irms*np.sin(phasevoltaje-phasecorriente)
+          ActivaPanelesFase1= np.abs(vrms*irms*cosphiPaneles)
+          ReactivaPanelesFase1 = vrms*irms*np.sin(phasevoltajePaneles-phasecorrientePaneles)
           b2 = datetime.datetime.now()
           delta=(((b2 - b).microseconds)/1000+((b2 - b).seconds)*1000)/10000000000
-          energyPanelesFase1 += AActivaPanelesFase1*delta*2.8
+          energyPanelesFase1 += ActivaPanelesFase1*delta*2.8
           b = datetime.datetime.now()
-    if(i==3):
+    if(i=="3"):
+          global c
+          global energyCargaFase1 
+          global AparenteCargaFase1
+          global ActivaCargaFase1
+          global ReactivaCargaFase1
           AparenteCargaFase1 = vrms*irms
-          ActivaCargaFase1= np.abs(vrms*irms*cosphi)
-          ReactivaCargaFase1 = vrms*irms*np.sin(phasevoltaje-phasecorriente)
+          ActivaCargaFase1= np.abs(vrms*irms*cosphiCarga)
+          ReactivaCargaFase1 = vrms*irms*np.sin(phasevoltajeCarga-phasecorrienteCarga)
           c2 = datetime.datetime.now()
           delta=(((c2 - c).microseconds)/1000+((c2 - c).seconds)*1000)/10000000000
           energyCargaFase1 += ActivaCargaFase1*delta*2.8
@@ -1052,12 +1054,7 @@ irms3=0.0
 
 def received():
            while True:
-                  global vrms1
-                  global vrms2
-                  global vrms3
-                  global irms1
-                  global irms2
-                  global irms3
+                  
                   esp32_bytes = esp32.readline()
                   decoded_bytes = str(esp32_bytes[0:len(esp32_bytes)-2].decode("utf-8"))#utf-8
                   np_array = np.fromstring(decoded_bytes, dtype=float, sep=',')
@@ -1065,6 +1062,8 @@ def received():
        
                   if (len(np_array) == 8402):
                         if (np_array[0] == 11):
+                            global vrms1
+                            global irms1
                             samplings = np_array[-1]
                             list_FPVoltage3 = np_array[0:4200]
                             list_FPCurrent3 = np_array[4201:8400]
@@ -1143,6 +1142,8 @@ def received():
                             print(f'samplings 1: {samplings}')
                             #FP(list_FPVoltage, list_FPCurrent, i=1)
                         if (np_array[0] == 22):
+                            global vrms2
+                            global irms2
                             samplings = np_array[-1]
                             list_FPVoltage3 = np_array[0:4200]
                             list_FPCurrent3 = np_array[4201:8400]
@@ -1221,6 +1222,8 @@ def received():
                             print(f'samplings 2: {samplings}')
                             #FP(list_FPVoltage, list_FPCurrent, i=1)
                         if (np_array[0] == 33):
+                            global vrms3
+                            global irms3
                             samplings = np_array[-1]
                             list_FPVoltage3 = np_array[0:4200]
                             list_FPCurrent3 = np_array[4201:8400]
@@ -1414,46 +1417,46 @@ def fase1():
      return render_template('fase1.html',
          vrms1=round(vrms1,2),
          irms1=round(irms1,2),
-         AparenteCGEFase1=AparenteCGEFase1,
-         ActivaCGEFase1=ActivaCGEFase1,
-         ReactivaCGEFase1=ReactivaCGEFase1,
+         AparenteCGEFase1=round(AparenteCGEFase1,2),
+         ActivaCGEFase1=round(ActivaCGEFase1,2),
+         ReactivaCGEFase1=round(ReactivaCGEFase1,2),
          vrms2=round(vrms2,2),
          irms2=round(irms2,2),
-         AparentePanelesFase1=AparentePanelesFase1,
-         ActivaPanelesFase1=ActivaPanelesFase1,
-         ReactivaPanelesFase1=ReactivaPanelesFase1,
+         AparentePanelesFase1=round(AparentePanelesFase1,2),
+         ActivaPanelesFase1=round(ActivaPanelesFase1,2),
+         ReactivaPanelesFase1=round(ReactivaPanelesFase1,2),
          vrms3=round(vrms3,2),
          irms3=round(irms3,2),
-         AparenteCargaFase1=AparenteCargaFase1,
-         ActivaCargaFase1=ActivaCargaFase1,
-         ReactivaCargaFase1=ReactivaCargaFase1,
-         energyCGEFase1=energyCGEFase1, 
-         energyPanelesFase1=energyPanelesFase1,
-         energyCargaFase1=energyCargaFase1,
-         DATVoltajeCGE=DATVoltajeCGE,
-         phasevoltajeCGE=phasevoltajeCGE,
-         FDvoltajeCGE=FDvoltajeCGE,
-         DATVoltajePaneles=DATVoltajePaneles,
-         phasevoltajePaneles=phasevoltajePaneles,
-         FDvoltajePaneles=FDvoltajePaneles,
-         DATVoltajeCarga=DATVoltajeCarga,
-         phasevoltajeCarga=phasevoltajeCarga,
-         FDvoltajeCarga=FDvoltajeCarga,
-         FDCorrienteCGE=FDCorrienteCGE,
-         DATCorrienteCGE =DATCorrienteCGE, 
-         phasecorrienteCGE=phasecorrienteCGE,
-         FDCorrientePaneles=FDCorrientePaneles,
-         DATCorrientePaneles=DATCorrientePaneles,
-         phasecorrientePaneles=phasecorrientePaneles,
-         FDCorrienteCarga=FDCorrienteCarga,
-         DATCorrienteCarga=DATCorrienteCarga,
-         phasecorrienteCarga=phasecorrienteCarga,
-         FPCGE=FPCGE,
-         cosphiCGE=cosphiCGE,
-         FPPaneles=FPPaneles,
-         cosphiPaneles=cosphiPaneles,
-         FPCarga=FPCarga,
-         cosphiCarga=cosphiCarga,
+         AparenteCargaFase1=round(AparenteCargaFase1,2),
+         ActivaCargaFase1=round(ActivaCargaFase1,2),
+         ReactivaCargaFase1=round(ReactivaCargaFase1,2),
+         energyCGEFase1=round(energyCGEFase1,2),
+         energyPanelesFase1=round(energyPanelesFase1,2),
+         energyCargaFase1=round(energyCargaFase1,2),
+         DATVoltajeCGE=round(DATVoltajeCGE,2),
+         phasevoltajeCGE=round(phasevoltajeCGE,2),
+         FDvoltajeCGE=round(FDvoltajeCGE,2),
+         DATVoltajePaneles=round(DATVoltajePaneles,2),
+         phasevoltajePaneles=round(phasevoltajePaneles,2),
+         FDvoltajePaneles=round(FDvoltajePaneles,2),
+         DATVoltajeCarga=round(DATVoltajeCarga,2),
+         phasevoltajeCarga=round(phasevoltajeCarga,2),
+         FDvoltajeCarga=round(FDvoltajeCarga,2),
+         FDCorrienteCGE=round(FDCorrienteCGE,2),
+         DATCorrienteCGE =round(DATCorrienteCGE,2), 
+         phasecorrienteCGE=round(phasecorrienteCGE,2),
+         FDCorrientePaneles=round(FDCorrientePaneles,2),
+         DATCorrientePaneles=round(DATCorrientePaneles,2),
+         phasecorrientePaneles=round(phasecorrientePaneles,2),
+         FDCorrienteCarga=round(FDCorrienteCarga,2),
+         DATCorrienteCarga=round(DATCorrienteCarga,2),
+         phasecorrienteCarga=round(phasecorrienteCarga,2),
+         FPCGE=round(FPCGE,2),
+         cosphiCGE=round(cosphiCGE,2),
+         FPPaneles=round(FPPaneles,2),
+         cosphiPaneles=round(cosphiPaneles,2),
+         FPCarga=round(FPCarga,2),
+         cosphiCarga=round(cosphiCarga,2),
          labelsvoltaje1=labelsvoltaje1,
          labelsvoltaje2=labelsvoltaje2,
          labelsvoltaje3=labelsvoltaje3,
