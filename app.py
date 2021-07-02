@@ -147,8 +147,9 @@ def get_cpuload():
     return str(cpuload)
 
 global CPU_temp
+CPU_temp = 0.0
 def getTEMP():
-   
+    
     CPU_temp = round(cpu_temp(),0)
     #print(f'temp cpu: {CPU_temp}')
     if CPU_temp > 50:
@@ -161,7 +162,8 @@ def getTEMP():
 
 global temperatura
 global humedad
-
+temperatura = 0.0
+humedad = 0.0
 def temphum():
     
     try:
@@ -354,6 +356,7 @@ def graphVoltage1(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Graf
         labelsvoltaje1 = [ i for i in my_formatted_list ]
         ejeyV11 = maximovoltaje + 100
         ejeyV12 = minimovoltaje - 100
+        print(f'values voltaje: {len(labelsvoltaje1)}')
         #Graficar png
            # plt.figure(figsize=(15, 5))
            #plt.plot(list_fftVoltage)
@@ -385,7 +388,7 @@ def graphVoltage2(list_fftVoltage,maximovoltaje,minimovoltaje,samplings): ##Graf
         ejeyV22 = minimovoltaje - 100
 
 global labelsvoltaje3
-global valuesvoltaje2
+global valuesvoltaje3
 global ejeyV31
 global ejeyV32
 
@@ -510,7 +513,7 @@ def graphFFTV1(list_fftVoltages, samplings):
         valuesfftv1 = [ i for i in ejey]
         xf1 = np.round(xf,1)
         labelsfftv1 = [ i for i in xf1[:intervalo] ]
-        largoejey1 = max(ejey)
+        largoejeyv1 = max(ejey)
 
 
 global valuesfftv2
@@ -1038,6 +1041,13 @@ global irms1
 global irms2
 global irms3
 
+vrms1=0.0
+vrms2=0.0
+vrms3=0.0
+irms1=0.0
+irms2=0.0
+irms3=0.0
+
 
 def received():
            while True:
@@ -1124,7 +1134,7 @@ def received():
                             #samplings = np_array[-1]
                             graphVoltageCurrent(NoVoltageoffset,NoCurrentoffset,samplings)
                             Potencias(1,irms1,vrms1)
-                            print(f'samplings 2: {samplings}')
+                            print(f'samplings 1: {samplings}')
                             #FP(list_FPVoltage, list_FPCurrent, i=1)
                         if (np_array[0] == 22):
                             samplings = np_array[-1]
@@ -1280,14 +1290,14 @@ def received():
                             #samplings = np_array[-1]
                             graphVoltageCurrent(NoVoltageoffset,NoCurrentoffset,samplings)
                             Potencias(3,irms3,vrms3)
-                            print(f'samplings 2: {samplings}')
+                            print(f'samplings 3: {samplings}')
                             #FP(list_FPVoltage, list_FPCurrent, i=1)
                     
                   if (len(np_array)>0 and len(np_array)<=2):
                           global tempESP32
                           getTEMP()
                           temphum()
-                          distance()
+                          #distance()
                           tempESP32 = round(np_array[0],0)
                           #print(f'array: {np_array}')
 """                           
@@ -1380,7 +1390,7 @@ def index():
      
       
      return render_template('index.html',**templateData,
-      puerta=puerta,
+      puerta="abierta",
       tempESP32=tempESP32,
       CPU_temp=CPU_temp,
       humedad=humedad,
@@ -1396,121 +1406,115 @@ def fase1():
      
      
      return render_template('fase1.html',
-     #
-     # puerta=puerta,
-     vrms1=round(vrms1,2),
-     irms1=round(irms1,2),
-     fp1=FP1,
-     cosphi=cosphi,
-     AparenteCGEFase1=AparenteCGEFase1,
-     ActivaCGEFase1=ActivaCGEFase1,
-     ReactivaCGEFase1=ReactivaCGEFase1,
-
-     vrms2=round(vrms2,2),
-     irms2=round(irms2,2),
-     AparentePanelesFase1=AparentePanelesFase1,
-     ActivaPanelesFase1=ActivaPanelesFase1,
-     ReactivaPanelesFase1=ReactivaPanelesFase1,
-
-
-     vrms3=round(vrms3,2),
-     irms3=round(irms3,2),
-     AparenteCargaFase1=AparenteCargaFase1,
-     ActivaCargaFase1=ActivaCargaFase1,
-     ReactivaCargaFase1=ReactivaCargaFase1,
-
-
-     energyCGEFase1=energyCGEFase1, 
-     energyPanelesFase1=energyPanelesFase1,
-     energyCargaFase1=energyCargaFase1,
-
-
-     DATVoltajeCGE=DATVoltajeCGE,
-     phasevoltajeCGE=phasevoltajeCGE,
-     FDvoltajeCGE=FDvoltajeCGE,
-     DATVoltajePaneles=DATVoltajePaneles,
-     phasevoltajePaneles=phasevoltajePaneles,
-     FDvoltajePaneles=FDvoltajePaneles,
-     DATVoltajeCarga=DATVoltajeCarga,
-     phasevoltajeCarga=phasevoltajeCarga,
-     FDvoltajeCarga=FDvoltajeCarga,
-
-     
-     FDCorrienteCGE=FDCorrienteCGE,
-     DATCorrienteCGE =DATCorrienteCGE, 
-     phasecorrienteCGE=phasecorrienteCGE,
-     FDCorrientePaneles=FDCorrientePaneles,
-     DATCorrientePaneles=DATCorrientePaneles,
-     phasecorrientePaneles=phasecorrientePaneles,
-     FDCorrienteCarga=FDCorrienteCarga,
-     DATCorrienteCarga=DATCorrienteCarga,
-     phasecorrienteCarga=phasecorrienteCarga,
-     FPCGE=FPCGE,
-     cosphiCGE=cosphiCGE,
-     FPPaneles=FPPaneles,
-     cosphiPaneles=cosphiPaneles,
-     FPCarga=FPCarga,
-     cosphiCarga=cosphiCarga,
-
-     labelsvoltaje1=labelsvoltaje1,
-     labelsvoltaje2=labelsvoltaje2,
-     labelsvoltaje3=labelsvoltaje3,
-     valuesvoltaje1=valuesvoltaje1,
-     valuesvoltaje2=valuesvoltaje2,
-     valuesvoltaje3=valuesvoltaje3,
-     ejeyV11=ejeyV11,
-     ejeyV12=ejeyV12,
-     ejeyV21=ejeyV21,
-     ejeyV22=ejeyV22,
-     ejeyV31=ejeyV31,
-     ejeyV32=ejeyV32,
-     labelscurrent1=labelscurrent1,
-     valuescurrent1=valuescurrent1,
-     ejeycurrent11=ejeycurrent11,
-     ejeycurrent12=ejeycurrent12,
-     labelscurrent2=labelscurrent2,
-     valuescurrent2=valuescurrent2,
-     ejeycurrent21=ejeycurrent21,
-     ejeycurrent22=ejeycurrent22,
-     labelscurrent3=labelscurrent3,
-     valuescurrent3=valuescurrent3,
-     ejeycurrent31=ejeycurrent31,
-     ejeycurrent32=ejeycurrent32,
-     
-     labelsfftv1=labelsfftv1,
-     valuesfftv1=valuesfftv1,
-     largoejeyv1=largoejeyv1,
-     labelsfftv2=labelsfftv2,
-     valuesfftv2=valuesfftv2,
-     largoejeyv2=largoejeyv2,
-     labelsfftv3=labelsfftv3,
-     valuesfftv3=valuesfftv3,
-     largoejeyv3=largoejeyv3,
-     labelsffti1=labelsffti1,
-     valuesffti1=valuesffti1,
-     largoejeyi1=largoejeyi1,
-     labelsffti2=labelsffti2,
-     valuesffti2=valuesffti2,
-     largoejeyi2=largoejeyi2,
-     labelsffti3=labelsffti3,
-     valuesffti3=valuesffti3,
-     largoejeyi3=largoejeyi3,
-
-     tempESP32=tempESP32,
-     CPU_temp=CPU_temp,
-     humedad=humedad,
-     temperatura=temperatura,
-     ip_address=ip_address,
-     
-     maxcorriente=maxcorriente,
-     mincorriente=mincorriente,
-     FDCorriente=round(FDCorriente,2),
-     labelsfp=labelsfp,
-     valuesvoltage=valuesvoltage,
-     valuescurrent=valuescurrent,
-     maxvoltaje=maxvoltaje,
-     minvoltaje=minvoltaje)   
-
+    
+         vrms1=round(vrms1,2),
+         irms1=round(irms1,2),
+         AparenteCGEFase1=AparenteCGEFase1,
+         ActivaCGEFase1=ActivaCGEFase1,
+         ReactivaCGEFase1=ReactivaCGEFase1,
+    
+         vrms2=round(vrms2,2),
+         irms2=round(irms2,2),
+         AparentePanelesFase1=AparentePanelesFase1,
+         ActivaPanelesFase1=ActivaPanelesFase1,
+         ReactivaPanelesFase1=ReactivaPanelesFase1,
+    
+    
+         vrms3=round(vrms3,2),
+         irms3=round(irms3,2),
+         AparenteCargaFase1=AparenteCargaFase1,
+         ActivaCargaFase1=ActivaCargaFase1,
+         ReactivaCargaFase1=ReactivaCargaFase1,
+    
+    
+         energyCGEFase1=energyCGEFase1, 
+         energyPanelesFase1=energyPanelesFase1,
+         energyCargaFase1=energyCargaFase1,
+    
+    
+         DATVoltajeCGE=DATVoltajeCGE,
+         phasevoltajeCGE=phasevoltajeCGE,
+         FDvoltajeCGE=FDvoltajeCGE,
+         DATVoltajePaneles=DATVoltajePaneles,
+         phasevoltajePaneles=phasevoltajePaneles,
+         FDvoltajePaneles=FDvoltajePaneles,
+         DATVoltajeCarga=DATVoltajeCarga,
+         phasevoltajeCarga=phasevoltajeCarga,
+         FDvoltajeCarga=FDvoltajeCarga,
+         FDCorrienteCGE=FDCorrienteCGE,
+         DATCorrienteCGE =DATCorrienteCGE, 
+         phasecorrienteCGE=phasecorrienteCGE,
+         FDCorrientePaneles=FDCorrientePaneles,
+         DATCorrientePaneles=DATCorrientePaneles,
+         phasecorrientePaneles=phasecorrientePaneles,
+         FDCorrienteCarga=FDCorrienteCarga,
+         DATCorrienteCarga=DATCorrienteCarga,
+         phasecorrienteCarga=phasecorrienteCarga,
+         FPCGE=FPCGE,
+         cosphiCGE=cosphiCGE,
+         FPPaneles=FPPaneles,
+         cosphiPaneles=cosphiPaneles,
+         FPCarga=FPCarga,
+         cosphiCarga=cosphiCarga,
+         labelsvoltaje1=labelsvoltaje1,
+         labelsvoltaje2=labelsvoltaje2,
+         labelsvoltaje3=labelsvoltaje3,
+         valuesvoltaje1=valuesvoltaje1,
+         valuesvoltaje2=valuesvoltaje2,
+         valuesvoltaje3=valuesvoltaje3,
+         ejeyV11=ejeyV11,
+         ejeyV12=ejeyV12,
+         ejeyV21=ejeyV21,
+         ejeyV22=ejeyV22,
+         ejeyV31=ejeyV31,
+         ejeyV32=ejeyV32,
+         labelscurrent1=labelscurrent1,
+         valuescurrent1=valuescurrent1,
+         ejeycurrent11=ejeycurrent11,
+         ejeycurrent12=ejeycurrent12,
+         labelscurrent2=labelscurrent2,
+         valuescurrent2=valuescurrent2,
+         ejeycurrent21=ejeycurrent21,
+         ejeycurrent22=ejeycurrent22,
+         labelscurrent3=labelscurrent3,
+         valuescurrent3=valuescurrent3,
+         ejeycurrent31=ejeycurrent31,
+         ejeycurrent32=ejeycurrent32,
+         
+         labelsfftv1=labelsfftv1,
+         valuesfftv1=valuesfftv1,
+         largoejeyv1=largoejeyv1,
+         labelsfftv2=labelsfftv2,
+         valuesfftv2=valuesfftv2,
+         largoejeyv2=largoejeyv2,
+         labelsfftv3=labelsfftv3,
+         valuesfftv3=valuesfftv3,
+         largoejeyv3=largoejeyv3,
+         labelsffti1=labelsffti1,
+         valuesffti1=valuesffti1,
+         largoejeyi1=largoejeyi1,
+         labelsffti2=labelsffti2,
+         valuesffti2=valuesffti2,
+         largoejeyi2=largoejeyi2,
+         labelsffti3=labelsffti3,
+         valuesffti3=valuesffti3,
+         largoejeyi3=largoejeyi3,
+    
+         tempESP32=tempESP32,
+         CPU_temp=CPU_temp,
+         humedad=humedad,
+         temperatura=temperatura,
+         ip_address=ip_address,
+         
+         maxcorriente=maxcorriente,
+         mincorriente=mincorriente,
+         FDCorriente=round(FDCorriente,2),
+         labelsfp=labelsfp,
+         valuesvoltage=valuesvoltage,
+         valuescurrent=valuescurrent,
+         maxvoltaje=maxvoltaje,
+         minvoltaje=minvoltaje)   
+    
 
 @app.route('/<changePin>/<action>')
 def action(changePin, action):
