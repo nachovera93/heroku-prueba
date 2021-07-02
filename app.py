@@ -40,11 +40,11 @@ dhtDevice = adafruit_dht.DHT11(board.D18)
 
 app = Flask(__name__)
 
-global list_Current1
-global list_Current2
-global list_Current3
-global list_Voltage1
-global list_temp
+#global list_Current1
+#global list_Current2
+#global list_Current3
+#global list_Voltage1
+#global list_temp
 
 #moment = Moment(app)
 """
@@ -616,14 +616,34 @@ def graphFFTI3(list_fftVoltages, samplings):
         labelsffti3 = [ i for i in xf1[:intervalo] ]
         largoejeyi3 = max(ejey)
 
-phasevoltaje=0.0
-sincvoltaje=0
+DATVoltajeCGE=0.0
+phasevoltajeCGE=0.0
+FDvoltajeCGE=0.0
+DATVoltajePaneles=0.0
+phasevoltajePaneles=0.0
+FDvoltajePaneles=0.0
+DATVoltajeCarga=0.0
+phasevoltajeCarga=0.0
+FDvoltajeCarga=0.0
+sincvoltaje1=0
+sincvoltaje2=0
+sincvoltaje3=0
 
-def VoltageFFT(list_fftVoltages, samplings):
-    global DATVoltaje
-    #global phasevoltaje
-    global sincvoltaje
-    global FaseArmonicoFundamentalVoltaje
+def VoltageFFT(list_fftVoltages, samplings,i):
+    i = str(i)
+    global DATVoltajeCGE
+    global phasevoltajeCGE
+    global FDvoltajeCGE
+    global DATVoltajePaneles
+    global phasevoltajePaneles
+    global FDvoltajePaneles
+    global DATVoltajeCarga
+    global phasevoltajeCarga
+    global FDvoltajeCarga
+    global sincvoltaje1
+    global sincvoltaje2
+    global sincvoltaje3
+    #global FaseArmonicoFundamentalVoltaje
     N = len(list_fftVoltages)
     T = 1 / samplings
     list_fftVoltages -= np.mean(list_fftVoltages)
@@ -694,32 +714,40 @@ def VoltageFFT(list_fftVoltages, samplings):
                if(FD[i]>(FD[0]/10)):
                    FD2.append(FD[i])
                    
-           #print(f'FD2V: {FD2}')
-           #print(f'FD largo: {len(FD)}')
            SumMagnitudEficaz = (np.sum([FD2[0:len(FD2)]]))
            print(f'Vrms total: {round(SumMagnitudEficaz,2)}')
            Magnitud1 = FD[0]
            print(f'V rms armonico 1: {round(Magnitud1,2)}')
            #razon=Magnitud1/SumMagnitudEficaz
            #armonico1voltaje=valor*razon
-           #print(f'armonico1voltaje: {round(armonico1voltaje,2)}')
-           #FD = armonico1voltaje/valor
-           FDvoltaje = Magnitud1/SumMagnitudEficaz
            #print(f'FD Voltaje: {round(FD,2)}')
            #DATVoltaje = np.sqrt((valor**2-armonico1voltaje**2)/(armonico1voltaje**2))
-           #print(f'DAT Corriente: {round(DATVoltaje,2)}')
-           #print(f'a2 voltaje : {complejo[0]}')
-           #print(f'a2 real : {a2.real}')
-           #print(f'a2 complejo: {a2.imag}')
-           sincvoltaje = 0
-           #print(f'sincvoltaje == {sincvoltaje}')
-           phasevoltaje = np.arctan(real[0]/(imag[0]))
-           FaseArmonicoFundamentalVoltaje=round(np.angle(complejo[0]),2)
-           sincvoltaje = 1
-           #print(f'sincvoltaje == {sincvoltaje}')
-           #print(f'phase voltaje : {phasevoltaje}')
-           #print(f'radian: {FaseArmonicoFundamentalVoltaje}')
-           return phasevoltaje,FDvoltaje
+           sincvoltaje1 = 0
+           if(i=1):
+                 phasevoltajeCGE = np.arctan(real[0]/(imag[0]))
+                 #FaseArmonicoFundamentalVoltaje1=round(np.angle(complejo[0]),2)
+                 FDvoltajeCGE = Magnitud1/SumMagnitudEficaz
+                 DATVoltajeCGE = np.sqrt(((SumMagnitudEficaz**2)-(Magnitud1**2))/(Magnitud1**2))
+                 sincvoltaje1 = 1
+                 #return phasevoltajeCGE,FDvoltajeCGE,DATVoltajeCGE
+            sincvoltaje2 = 0
+            if(i=2):
+                 phasevoltajePaneles = np.arctan(real[0]/(imag[0]))
+                 #FaseArmonicoFundamentalVoltaje1=round(np.angle(complejo[0]),2)
+                 FDvoltajePaneles = Magnitud1/SumMagnitudEficaz
+                 DATVoltajePaneles = np.sqrt(((SumMagnitudEficaz**2)-(Magnitud1**2))/(Magnitud1**2))
+                 sincvoltaje2 = 1
+                 #return phasevoltajePaneles,FDvoltajePaneles,DATVoltajePaneles
+            sincvoltaje3 = 0
+            if(i=3):
+                 phasevoltajeCGE = np.arctan(real[0]/(imag[0]))
+                 #FaseArmonicoFundamentalVoltaje1=round(np.angle(complejo[0]),2)
+                 FDvoltajeCarga = Magnitud1/SumMagnitudEficaz
+                 DATVoltajeCarga = np.sqrt(((SumMagnitudEficaz**2)-(Magnitud1**2))/(Magnitud1**2))
+                 sincvoltaje3 = 1
+                 #return phasevoltajeCarga,FDvoltajeCarga,DATVoltajeCarga
+
+
 
 
               
@@ -727,17 +755,22 @@ def VoltageFFT(list_fftVoltages, samplings):
 phasen = 0.0
 
 def CurrentFFT(list_fftVoltages, samplings, i):
-    global DATCorriente
-    global FDCorriente
+    global DATCorrienteCGE
+    global DATCorrientePaneles
+    global DATCorrienteCarga
+    global FDCorrienteCGE
+    global FDCorrientePaneles
+    global FDCorrienteCarga
     global a2
     global FP1
     global cosphi
     global phasen
     global phasecorriente
-    global FD
-    global sincvoltaje
+    
+    global sincvoltaje1
+    global sincvoltaje2
+    global sincvoltaje3
     i = str(i)
-    g = int(i)
     N = len(list_fftVoltages)
     T = 1 / samplings
     list_fftVoltages -= np.mean(list_fftVoltages)
@@ -804,43 +837,32 @@ def CurrentFFT(list_fftVoltages, samplings, i):
          #print(f'FD2: {FD2}')
          #print(f'FD largo: {len(FD)}')
          SumMagnitudEficaz = (np.sum([FD2[0:len(FD2)]]))
-                 
-         #+dccomponent
          print(f'Irms total: {round(SumMagnitudEficaz,2)}')
          Magnitud1 = FD[0]
          print(f'Irms armonico 1: {round(Magnitud1,2)}')
          #razon=Magnitud1/SumMagnitudEficaz
          #armonico1corriente=valor1*razon
-         #print(f'armonico1corriente: {round(armonico1corriente,2)}')
-         #I1rms = FD[0]
-         #print(f'I1rms: {round(I1rms,2)}')
-         #FD = armonico1corriente/valor1
-         FDCorriente=Magnitud1/SumMagnitudEficaz
-         #print(f'FD Corriente: {round(FDCorriente,2)}')
-         #arra2 = max(ejeyabsolut[:55])
-         DATCorriente = np.sqrt((SumMagnitudEficaz**2-Magnitud1**2)/(Magnitud1**2))
-         #print(f'DAT Corriente: {round(DATCorriente,2)}')
          #MagnitudArmonicoFundamentalCorriente=round(thd_array[0],3)
-         #print(f'a2 : {complejo[0]}')
-         phasecorriente = np.arctan(real[0]/(imag[0]))
-         #print(f'phase : {phasecorriente}')
          #fp2=round((armonico1corriente*np.cos(phasevoltaje-phasen))/valor1,2)
-         FaseArmonicoFundamentalCorriente=round(np.angle(complejo[0]),2)
-         #print(f'radian: {FaseArmonicoFundamentalCorriente}')
-         #Grados = math.degrees(phasen)
-         #print(f'grados: {Grados}')
-         #GradoArmonicoFundamentalCorriente=round(Grados,2)
-         #print(f'GradoArmonicoFundamentalCorriente : {GradoArmonicoFundamentalCorriente}')
-         #print(f'FP : {np.cos(0-GradoArmonicoFundamentalCorriente)}')
-         if (sincvoltaje == 1):
-                 #print(f'sincvoltaje == {sincvoltaje}')
-                 FP1=np.cos(phasevoltaje-phasecorriente)*FDCorriente
-                 cosphi=np.cos(phasevoltaje-phasecorriente)
-                 #FP=np.cos(FaseArmonicoFundamentalVoltaje-FaseArmonicoFundamentalCorriente)
-                 print(f'FP1 : {FP1}')
-                 print(f'cos(phi) : {cosphi}')
+         #FaseArmonicoFundamentalCorriente=round(np.angle(complejo[0]),2)
          
-         sincvoltaje=0    
+         #GradoArmonicoFundamentalCorriente=round(Grados,2)
+         
+         if(i=1):
+             FDCorrienteCGE=Magnitud1/SumMagnitudEficaz
+             DATCorrienteCGE = np.sqrt((SumMagnitudEficaz**2-Magnitud1**2)/(Magnitud1**2))
+             phasecorrienteCGE = np.arctan(real[0]/(imag[0]))
+             if (sincvoltaje1 == 1):
+                 FPCGE=np.cos(phasevoltajeCGE-phasecorrienteCGE)*FDCorriente
+                 cosphiCGE=np.cos(phasevoltaje-phasecorriente)
+                 #FP=np.cos(FaseArmonicoFundamentalVoltaje-FaseArmonicoFundamentalCorriente)
+                 print(f'FP1 : {FPCGE}')
+                 print(f'cos(phi) : {cosphiCGE}')
+                 sincvoltaje1=0  
+                 return FPCGE
+         sincvoltaje1=0 
+         
+           
          #print(f'sincvoltaje == {sincvoltaje}')    
          #print(f'FP2 : {np.cos(0-GradoArmonicoFundamentalCorriente)*FD}')
          #MagnitudTotalArmonicosCorriente=round(sum,3)
@@ -924,16 +946,7 @@ def Potencias(i,irms,vrms):
           c = datetime.datetime.now()
     
 
-phi1 = 0.0
-fp1=0.0
-thdv=0.0
-thdi=0.0
-ApFase1=0.0
-AcFase1=0.0
-ReacFase1=0.0
-valor=0.0
-valor1=0.0
-energyFase1 = 0.0
+
 
 global vrms1
 global vrms2
@@ -948,10 +961,10 @@ global FDvoltaje3
 
 def received():
            while True:
-                  global valor
+                  #global valor
                   #global thdv
                   #global thdi
-                  global valor1 
+                  #global valor1 
                   esp32_bytes = esp32.readline()
                   decoded_bytes = str(esp32_bytes[0:len(esp32_bytes)-2].decode("utf-8"))#utf-8
                   np_array = np.fromstring(decoded_bytes, dtype=float, sep=',')
@@ -1016,7 +1029,7 @@ def received():
 
 
                             vrms1 = VoltajeRms(NoVoltageoffset2)
-                            phasevoltaje1,FDvoltaje1 = VoltageFFT(NoVoltageoffset2,samplings)
+                            VoltageFFT(NoVoltageoffset2,samplings,1)
                             graphVoltage1(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
                             graphFFT(NoVoltageoffset2,samplings)
                             
@@ -1094,13 +1107,13 @@ def received():
 
 
                             vrms2=VoltajeRms(NoVoltageoffset2)
-                            phasevoltaje2,FDvoltaje2=VoltageFFT(NoVoltageoffset2,samplings)
+                            VoltageFFT(NoVoltageoffset2,samplings,2)
                             graphVoltage2(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
                             graphFFT(NoVoltageoffset2,samplings)
                             
                             
                             irms2 = CorrienteRms(NoCurrentoffset2)
-                            CurrentFFT(NoCurrentoffset2,samplings,1)
+                            CurrentFFT(NoCurrentoffset2,samplings,2)
                             graphCurrent(NoCurrentoffset2,samplings)
                             graphFFTI(NoCurrentoffset2,samplings)
                             #maximo=max(list_FPCurrent[1000:1700])
@@ -1126,7 +1139,7 @@ def received():
                             list_FPCurrent2 = signal.sosfilt(sos, list_FPCurrent3)
                             
                             list_FPVoltage = list_FPVoltage2[104:4200]
-                            list_FPCurrent = list_FPCurrent2 [103:4200]
+                            list_FPCurrent = list_FPCurrent2[103:4200]
 
                             #Valor dc de Voltaje
                             valoresmaximovoltajesinmedia=getMaxValues(list_FPVoltage, 20)
@@ -1172,13 +1185,13 @@ def received():
 
 
                             vrms3=VoltajeRms(NoVoltageoffset2)
-                            phasevoltaje3,FDvoltaje3=VoltageFFT(NoVoltageoffset2,samplings)
+                            VoltageFFT(NoVoltageoffset2,samplings,3)
                             graphVoltage3(NoVoltageoffset2,maximovoltaje2,minimovoltaje2,samplings)
                             graphFFT(NoVoltageoffset2,samplings)
                             
                             
                             irms3 = CorrienteRms(NoCurrentoffset2)
-                            CurrentFFT(NoCurrentoffset2,samplings,1)
+                            CurrentFFT(NoCurrentoffset2,samplings,3)
                             graphCurrent(NoCurrentoffset2,samplings)
                             graphFFTI(NoCurrentoffset2,samplings)
                             #maximo=max(list_FPCurrent[1000:1700])
@@ -1256,9 +1269,7 @@ def received():
                         #else:
                          #    ApFase1,AcFase1,ReacFase1,energyFase1=Potencias(vrms=valor,irms=valor1,phi=phi1,i=1)
                         
-Aparente2 = 0.0
-Activa2 = 0.0
-Reactiva2 = 0.0
+
 x = datetime.datetime.now()
 
 @app.route('/index.html')
@@ -1290,9 +1301,8 @@ def index():
          #labels = [row[0] for row in data]
          #values = [row[1] for row in data]
      
-     
-     
-     return render_template('index.html',**templateData,
+      
+      return render_template('index.html',**templateData,
       puerta=puerta,
       energyfase1=round(energyFase1,3),
       tempESP32=tempESP32,
@@ -1314,8 +1324,8 @@ def fase1():
      # puerta=puerta,
      vrms1=round(vrms1,2),
      irms1=round(irms1,2),
-     fp1=round(FP1,2),
-     cosphi=round(cosphi,2),
+     fp1=FP1,
+     cosphi=cosphi,
      AparenteCGEFase1=AparenteCGEFase1
      ActivaCGEFase1=ActivaCGEFase1
      ReactivaCGEFase1=ReactivaCGEFase1
@@ -1373,12 +1383,7 @@ def fase1():
      valuescurrent3=valuescurrent3,
      ejeycurrent31=ejeycurrent31,
      ejeycurrent32=ejeycurrent32,
-     ApFase1=round(ApFase1,2),
-     AcFase1=round(AcFase1,2),
-     ReacFase1=round(ReacFase1,2),
-     energyfase1=round(energyFase1,3),
-     values2=values2,
-     #thdv=round(DATCorriente,2)
+     
      labelsfftv1=labelsfftv1,
      valuesfftv1=valuesfftv1,
      largoejeyv1=largoejeyv1,
@@ -1408,7 +1413,9 @@ def fase1():
      valuesvoltage=valuesvoltage,
      valuescurrent=valuescurrent,
      maxvoltaje=maxvoltaje,
-     minvoltaje=minvoltaje)   
+     minvoltaje=minvoltaje)
+     #values2=values2,
+     #thdv=round(DATCorriente,2))   
 
 
 @app.route('/<changePin>/<action>')
