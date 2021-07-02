@@ -1,9 +1,9 @@
-Adafruit-Blinka==6.10.3
+#Adafruit-Blinka==6.10.3
 #adafruit-circuitpython-dht==3.6.1
 #Adafruit-DHT==1.4.0
-Adafruit-PlatformDetect==3.14.2
-Adafruit-PureIO==1.1.9
-Adafruit-Python-DHT==1.4.0
+#Adafruit-PlatformDetect==3.14.2
+#Adafruit-PureIO==1.1.9
+#Adafruit-Python-DHT==1.4.0
 click==8.0.1
 continuous-threading==2.0.4
 DateTime==4.3
